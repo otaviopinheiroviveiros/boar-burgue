@@ -383,8 +383,6 @@ async function mostrarDescricao(produto){
     novopreco = produto.preco
     produtoClicado = produto
 
-    console.log(produtoClicado)
-
     conteudo_conteirMOstrarProdutos.style.display = "none"
     conteiner_titulo.style.display = "none"
     chamarCarrinho.style.display = "none"
@@ -515,7 +513,6 @@ function subtrairADicional(cardpai){
     novopreco -= totalRemover
 }
 
-
 function adicionarAOcarinho(){
     conteiner_mostrarDEscricao.style.display = "none"
     conteudo_conteirMOstrarProdutos.style.display = "block"
@@ -563,7 +560,6 @@ function mostrarcarrinho(){
     conteudo_conteirMOstrarProdutos.style.display = "none"
     conteiner_titulo.style.display = "none"
     conteiner_carrinho.style.display = "block"
-    console.log(carrinho)
     carrinho.forEach(Produto =>{
         const cardPAI = document.createElement("div")
         const cardPROduto = document.createElement("div")
