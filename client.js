@@ -11,6 +11,11 @@ const quantidade_preoco_produto = document.getElementById("quantidade")
 const chamarCarrinho = document.querySelector("#chamar-carrinho")
 const conteiner_carrinho = document.querySelector(".conteiner-carrinho")
 
+const voltar_do_carrinho = document.getElementById("butao-voltar-carrinho")
+const limparCArrinho = document.getElementById("limpar-carrinho")
+voltar_do_carrinho.addEventListener("click",voltarDOcarrinho)
+limparCArrinho.addEventListener("click",limpar_carrinho)
+
 const conteudo_carrinho = document.querySelector(".conteudo-mostrarcarrinho")
 
 chamarCarrinho.addEventListener("click",mostrarcarrinho)
@@ -71,14 +76,18 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-                
+                const img = document.createElement("img")
+
                 card.addEventListener("click",() =>{
                     mostrarDescricao(produto)
                 })
                 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -91,14 +100,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img")
                 card.addEventListener("click",() =>{ 
                     mostrarDescricao(produto)
                 })
 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -111,14 +123,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img")
                 card.addEventListener("click",()=>{
                     mostrarDescricao(produto)
                 })
 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -131,15 +146,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img") 
                 card.addEventListener("click",() =>{
                     mostrarDescricao(produto)
                 })
 
-
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -152,14 +169,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img")
                 card.addEventListener("click",()=>{
                     mostrarDescricao(produto)
                 })
 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -172,14 +192,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img")
                 card.addEventListener("click",()=>{
                     mostrarDescricao(produto)
                 })
 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -192,14 +215,17 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
-
+                const img = document.createElement("img")
                 card.addEventListener("click",()=>{
                     mostrarDescricao(produto)
                 })
 
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -212,14 +238,18 @@ async function buscarProdutos(){
                 const nome = document.createElement("h3")
                 const descricao = document.createElement("p")
                 const preco = document.createElement("h4")
+                const img = document.createElement("img")
 
                 card.addEventListener("click",()=>{
                     mostrarDescricao(produto)
                 })
-
+                
+                img.src = produto.img_url
+                img.className = "img-produto"
                 nome.textContent = produto.nome
                 preco.textContent = `R$ ${produto.preco},00`
                 descricao.textContent = produto.descricao
+                card.append(img)
                 card.append(nome)
                 card.append(descricao)
                 card.append(preco)
@@ -396,7 +426,7 @@ async function mostrarDescricao(produto){
 }
 
 let carrinho_adicional = []
-const carrinho = []
+let carrinho = []
 
 
 let adicionalpreco = 0
@@ -595,4 +625,22 @@ function mostrarcarrinho(){
         conteudo_carrinho.appendChild(cardPAI)
     })
 
+}
+
+function voltarDOcarrinho(){
+    conteudo_carrinho.innerHTML = ""
+    conteiner_carrinho.style.display = "none"
+    conteiner_titulo.style.display = "block"
+    menu.style.display = "flex"
+    conteudo_conteirMOstrarProdutos.style.display = "block"
+    chamarCarrinho.style.display = "block"
+}
+
+function limpar_carrinho(){
+    carrinho = []
+    conteudo_carrinho.innerHTML = ""
+    conteiner_carrinho.style.display = "none"
+    conteiner_titulo.style.display = "block"
+    menu.style.display = "flex"
+    conteudo_conteirMOstrarProdutos.style.display = "block"
 }
