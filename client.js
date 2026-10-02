@@ -10,12 +10,13 @@ const valorProduto  =  document.getElementById("valor")
 const quantidade_preoco_produto = document.getElementById("quantidade")
 const chamarCarrinho = document.querySelector("#chamar-carrinho")
 const conteiner_carrinho = document.querySelector(".conteiner-carrinho")
-
+let butao_confirma_pedido = null
 const voltar_do_carrinho = document.getElementById("butao-voltar-carrinho")
 const limparCArrinho = document.getElementById("limpar-carrinho")
 voltar_do_carrinho.addEventListener("click",voltarDOcarrinho)
 limparCArrinho.addEventListener("click",limpar_carrinho)
 
+const resumo_de_valores = document.querySelector(".conteudo-resumo-devalores")
 const conteudo_carrinho = document.querySelector(".conteudo-mostrarcarrinho")
 
 chamarCarrinho.addEventListener("click",mostrarcarrinho)
@@ -560,6 +561,19 @@ function mostrarcarrinho(){
     conteudo_conteirMOstrarProdutos.style.display = "none"
     conteiner_titulo.style.display = "none"
     conteiner_carrinho.style.display = "block"
+    
+    let totalpedido = 0
+    let total = document.createElement("h5")
+    const mensagem = document.createElement("h5")
+    butao_confirma_pedido = document.createElement("button")
+    butao_confirma_pedido.textContent = "comfimar"
+    butao_confirma_pedido.className = "butao-finalizar-pedido"
+    mensagem.textContent = "SEM taxa de entrega!"
+    let cardpreco = document.createElement("div")
+    const titulo = document.createElement("h2")
+    titulo.textContent = "Resumo de valores" 
+    cardpreco.append(titulo)
+    
     carrinho.forEach(Produto =>{
         const cardPAI = document.createElement("div")
         const cardPROduto = document.createElement("div")
@@ -568,7 +582,9 @@ function mostrarcarrinho(){
         const observacao = document.createElement("p")
         const quantidade = document.createElement("h4")
         cardPAI.className = "card_produtos_carrinho" 
-    
+        
+        let subtotalproduto = Produto.quantidade * Produto.preco
+        totalpedido += subtotalproduto
         produto.textContent = Produto.nome
         quantidade.textContent = Produto.quantidade
         img_produto.src = Produto.img
@@ -617,9 +633,21 @@ function mostrarcarrinho(){
                 cardPAI.append(divADD)
             }
 
-        }        
+        }
+        
+        const subtotal = document.createElement("h4")
+        subtotal.textContent = `R$ ${Produto.preco},00 X ${Produto.quantidade} = ${subtotalproduto}`
+        total.textContent = `Total a pagar: R$ ${totalpedido},00`
+        
+        cardpreco.append(subtotal)
         conteudo_carrinho.appendChild(cardPAI)
     })
+
+    cardpreco.append(total)
+    cardpreco.append(mensagem)
+    cardpreco.append(butao_confirma_pedido)
+    resumo_de_valores.appendChild(cardpreco)
+    
 
 }
 
@@ -630,6 +658,7 @@ function voltarDOcarrinho(){
     menu.style.display = "flex"
     conteudo_conteirMOstrarProdutos.style.display = "block"
     chamarCarrinho.style.display = "block"
+    resumo_de_valores.innerHTML = ""
 }
 
 function limpar_carrinho(){
@@ -639,4 +668,5 @@ function limpar_carrinho(){
     conteiner_titulo.style.display = "block"
     menu.style.display = "flex"
     conteudo_conteirMOstrarProdutos.style.display = "block"
+    resumo_de_valores.innerHTML = ""
 }
