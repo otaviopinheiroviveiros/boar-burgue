@@ -157,7 +157,7 @@ body{
     background-color: transparent;
     color:white;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .controleDEquantidade{
@@ -193,7 +193,7 @@ body{
 .elementosADDcarinho h3{
     margin: 0;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .controleDEquantidade h2{
@@ -284,12 +284,14 @@ input::placeholder{
     background-color: white;
     display: none;
     border-radius: 10px;
+    margin-top: 1rem;
 }
 
 .titulo-carrinho{
     width: 25rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .titulo-carrinho button{
@@ -304,6 +306,9 @@ input::placeholder{
 #butao-voltar-carrinho{
     font-size: 1.5rem;
     border-radius: 20px;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     margin-top: 0.5rem;
     margin-left: 0.3rem;
     position: sticky;
@@ -315,6 +320,7 @@ input::placeholder{
     color: red;
     border: none;
     border-bottom: solid blue 1px;
+    font-size: 1.2rem;
     margin-top: 0.5rem;
     margin-right: 0.5rem;
 }
@@ -325,7 +331,7 @@ input::placeholder{
     border-radius: 20px;
     display: flex;
     padding: 0.5rem;
-    width: 25rem;
+    width: 24rem;
     margin: auto;
     align-items: flex-start;
     flex-direction: column;
@@ -401,22 +407,30 @@ input::placeholder{
 }
 
 .div-observacao p{
-    font-size: 1.2rem;
+    color: red;
+    font-size: 1.5rem;
     overflow-wrap: break-word;
 }
 
 /* card resumo de valores */
 
 .conteudo-resumo-devalores{
-    padding: 1rem;
+    padding: 0.3rem;
 }
 
 .conteudo-resumo-devalores h4{
     padding: 0.5rem;
 }
+
 .conteudo-resumo-devalores h5{
     margin-top: 0.5rem;
     font-size: 1.3rem;
+}
+
+.conteudo-resumo-devalores div{
+    padding: 1rem;
+    border: solid gray;
+    border-radius: 20px;
 }
 
 .butao-finalizar-pedido{
@@ -428,6 +442,161 @@ input::placeholder{
     font-size: 1.2rem;
     margin-left: 8rem;
     padding: 1rem;
+}
+
+/* style finalizar peidodo */
+
+.conteiner-finalizar-pedido{
+    display: none;
+    width: 25rem;
+    margin: auto;
+    margin-top: 1rem;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.cards-pagamentos{
+    border: solid gray;
+    border-radius: 20px;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0.2rem 0.2rem 1rem gray;
+}
+
+
+.cards-pagamentos:has(input:checked){
+    box-shadow: 1rem 1rem 1rem gray;
+    border-color: green;
+}
+
+
+.cardFORmadepagamento{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.inputs{
+    padding: 0;
+    margin: 0;
+    width: 3rem;
+    height: 2rem;
+}
+
+.inputs:checked{
+    accent-color: green;
+}
+
+.cards-pagamentos label{
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-left: 0.5rem;
+    padding-right: 10rem;
+    font-size: 1.8rem;
+}
+
+.cardFORmadepagamento h1{
+    margin-bottom: 0.2rem;
+    margin-top: 0.3rem;
+    white-space: nowrap;
+}
+
+.card-entrega{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-entregasimg{
+    width: 3rem;
+}
+
+.card-retirada{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.entrega{
+    border: none;
+    font-size: 1.5rem;
+}
+
+.retirada{
+    border: none;
+    font-size: 1.5rem;
+}
+
+.cardbutoes-entrega{
+    width: 24rem;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cardbutoes-entrega h3{
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    white-space: nowrap;
+}
+
+.cardbutoes-entrega a{
+    display: none;
+    padding-top: 1rem;
+    text-decoration: none;
+    font-size: 1.6rem;
+    white-space: nowrap;
+}
+
+.entrega-endereco{
+    display: none;
+}
+
+.entrega-endereco h4{
+    padding-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.card-entregaCLICADO{
+    padding: 1rem;
+    border-radius: 20px;
+    border: solid gray;
+    box-shadow: 1rem 1rem 1rem gray;
+}
+
+.finalizar{
+    position: sticky;
+    bottom: 0;
+    background-color:white;
+    padding: 1rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-radius: 20px;
+}
+
+.total{
+    font-size: 1.6rem;
+    color: rgb(235, 6, 6);
+}
+
+#mandar_para_whatzap{
+    border: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.6rem;
+    background-color: red;
+    border-radius: 20px;
+    color: white;
 }
 
 @media (max-width:375px){

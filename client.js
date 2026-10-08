@@ -15,12 +15,12 @@ const voltar_do_carrinho = document.getElementById("butao-voltar-carrinho")
 const limparCArrinho = document.getElementById("limpar-carrinho")
 voltar_do_carrinho.addEventListener("click",voltarDOcarrinho)
 limparCArrinho.addEventListener("click",limpar_carrinho)
-
 const resumo_de_valores = document.querySelector(".conteudo-resumo-devalores")
 const conteudo_carrinho = document.querySelector(".conteudo-mostrarcarrinho")
 
 chamarCarrinho.addEventListener("click",mostrarcarrinho)
 
+const conteiner_finalizar_pedido = document.querySelector(".conteiner-finalizar-pedido")
 const quantidademais = document.getElementById("quantidademais")
 const quantidademenos = document.getElementById("quantidademenos")
 quantidademais.addEventListener("click",addCARINHOmais)
@@ -32,6 +32,16 @@ const conteinerAdicionais = document.querySelector(".rederizar-Adicionais")
 const voltarPricipal = document.getElementById("voltarPARAprincipal")
 voltarPricipal.addEventListener("click",voltarDAdescricao)
 addcarinho.addEventListener("click",adicionarAOcarinho)
+
+const mudarclasseENTREGA = document.querySelector(".card-entrega")
+const mudarclasseRETIRADA = document.querySelector(".card-retirada")
+const localizacao = document.getElementById("Localizacao")
+const formDEendereco = document.querySelector(".entrega-endereco")
+const totalparcial = document.querySelector(".total")
+mudarclasseENTREGA.addEventListener("click",mudarclasseEntrega)
+mudarclasseRETIRADA.addEventListener("click",mudarclasseREtirada)
+const mandarprozap = document.getElementById("mandar_para_whatzap")
+mandarprozap.addEventListener("click",pedidoWHAZAp)
 
 window.addEventListener("load",buscarProdutos)
 
@@ -562,16 +572,18 @@ function mostrarcarrinho(){
     conteiner_titulo.style.display = "none"
     conteiner_carrinho.style.display = "block"
     
+    let subVALOR_adicional = null
     let totalpedido = 0
+    let totalVALOR_adicional = null
     let total = document.createElement("h5")
     const mensagem = document.createElement("h5")
     butao_confirma_pedido = document.createElement("button")
-    butao_confirma_pedido.textContent = "comfimar"
+    butao_confirma_pedido.textContent = "Continuar"
     butao_confirma_pedido.className = "butao-finalizar-pedido"
     mensagem.textContent = "SEM taxa de entrega!"
     let cardpreco = document.createElement("div")
     const titulo = document.createElement("h2")
-    titulo.textContent = "Resumo de valores" 
+    titulo.textContent = "Resumo de valores"
     cardpreco.append(titulo)
     
     carrinho.forEach(Produto =>{
@@ -584,7 +596,6 @@ function mostrarcarrinho(){
         cardPAI.className = "card_produtos_carrinho" 
         
         let subtotalproduto = Produto.quantidade * Produto.preco
-        totalpedido += subtotalproduto
         produto.textContent = Produto.nome
         quantidade.textContent = Produto.quantidade
         img_produto.src = Produto.img
@@ -601,7 +612,6 @@ function mostrarcarrinho(){
         cardPAI.append(cardPROduto)
         
         if(Produto.observacao){
-            console.log(Produto.observacao)
             const div_observacao = document.createElement("div")
             if(Produto.observacao.length >= 1){
                 const observacao = document.createElement("p")
@@ -628,26 +638,33 @@ function mostrarcarrinho(){
                     divAuxiliar.append(quantidadeADD)
                     divAuxiliar.append(Adicional)
                     divADD.append(divAuxiliar)
+                    subVALOR_adicional = adicional.preco * adicional.quantidade
+                    totalVALOR_adicional += adicional.preco * adicional.quantidade
+                    const sub_adicional =  document.createElement("h4")
+                    sub_adicional.textContent = `R$ ${adicional.preco} x ${adicional.quantidade} = ${subVALOR_adicional}`
+                    cardpreco.append(sub_adicional)
                 })
 
                 cardPAI.append(divADD)
             }
 
         }
+
+        totalpedido += subtotalproduto + totalVALOR_adicional
         
         const subtotal = document.createElement("h4")
-        subtotal.textContent = `R$ ${Produto.preco},00 X ${Produto.quantidade} = ${subtotalproduto}`
+        subtotal.textContent = `R$ ${Produto.preco},00 x ${Produto.quantidade} = ${subtotalproduto}`
         total.textContent = `Total a pagar: R$ ${totalpedido},00`
         
         cardpreco.append(subtotal)
         conteudo_carrinho.appendChild(cardPAI)
     })
-
+    // carrinho.push({total:totalpedido})
     cardpreco.append(total)
     cardpreco.append(mensagem)
     cardpreco.append(butao_confirma_pedido)
     resumo_de_valores.appendChild(cardpreco)
-    
+    butao_confirma_pedido.addEventListener("click",finalizar_pedido)
 
 }
 
@@ -669,4 +686,58 @@ function limpar_carrinho(){
     menu.style.display = "flex"
     conteudo_conteirMOstrarProdutos.style.display = "block"
     resumo_de_valores.innerHTML = ""
+}
+
+function finalizar_pedido(){
+    conteiner_carrinho.style.display = "none"
+    conteiner_finalizar_pedido.style.display = "block"
+    let total = null
+
+    carrinho.forEach(produto =>{
+        total = produto.total
+    })
+    
+    totalparcial.textContent = `R$ ${total},00`
+}
+
+function mudarclasseEntrega(){
+    mudarclasseRETIRADA.classList.remove("card-entregaCLICADO")
+    mudarclasseENTREGA.classList.add("card-entregaCLICADO")
+    formDEendereco.style.display = "block"
+    localizacao.style.display = "none"
+}
+
+function mudarclasseREtirada(){
+    mudarclasseENTREGA.classList.remove("card-entregaCLICADO")
+    mudarclasseRETIRADA.classList.add("card-entregaCLICADO")
+    formDEendereco.style.display = "none"
+    localizacao.style.display = "block"
+}
+
+function pedidoWHAZAp(){
+    let total = null
+    let mensagem = `*🍔 NOVO PEDIDO*:\n\n
+    🛒 Itens:\n`
+    console.log(carrinho)
+    carrinho.forEach(produto =>{
+        total += produto.quantidade * produto.preco 
+        mensagem += `\n\n${produto.quantidade} - ${produto.nome}\n`
+        if(produto.adicional?.length >= 1 && produto.observacao){
+            produto.adicional.forEach(adicional=>{
+                total += adicional.preco * adicional.quantidade
+                mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n_Observação_: *${produto.observacao}*\n`
+            })
+        }else if(produto.adicional?.length >= 1){
+            produto.adicional.forEach(adicional=>{
+                total += adicional.preco * adicional.quantidade
+                mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n`
+            })
+        }else if(produto.observacao?.length >= 1){
+            mensagem += `_Observação_: *${produto.observacao}*\n`                
+        }
+    })
+
+    mensagem += `\n\ntotal sem taxa de Entrega: *$R ${total},00*`
+console.log(mensagem)
+
 }

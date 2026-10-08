@@ -35,7 +35,7 @@
         
         <div class="conteiner-produtos">
         </div>
-
+        
         <div class="conteiner-descricao">
             
             <button id="voltarPARAprincipal"><</button>
@@ -77,6 +77,81 @@
         
         </div>
 
+        <div class="conteiner-finalizar-pedido">
+            <div class="cardPAI">
+                    
+                    <div class="card-forma-de-entrega">
+                        
+                        <div class="cardbutoes-entrega">
+                            
+                                <h3>Selecione a forma de entrega!</h3>
+                                
+                                <div style="width: 18rem; margin:auto;display: flex; gap: 2rem; align-items: center; justify-content: center; padding: 1rem; border-radius: 20px;">
+                                    
+                                    <div class="card-entrega">
+                                        <img class="card-entregasimg" src="./img/bicicleta-de-entrega.png">
+                                        <button class="entrega">Entrega</button>
+                                    </div>
+                                    
+                                    <div class="card-retirada">
+                                        <img class="card-entregasimg" src="./img/retirada.png">
+                                        <button class="retirada">Retirada</button>
+                                    </div>
+                                </div>
+            
+                                
+                                <div class="entrega-endereco">
+                                    <h4>Endereço de Entrega</h4>
+                                    <form action="">
+                                        <input type="text" placeholder="Bairro">
+                                        <input type="number" placeholder="Rua/Avenida">
+                                        <input type="text" placeholder="Quadra">
+                                        <input type="text" placeholder="Ponto de referência">
+                                    </form>
+                                </div>
+                                
+                                <a id="Localizacao" href="https://maps.app.goo.gl/cZefvATF78A1hBFG7?g_st=aw" target="_blank">Localização:📍545 Av. do Sindicato</a>
+
+
+                        </div>
+                    
+                    </div>
+                
+                    <div class="cardFORmadepagamento">
+                        <h1>Forma de Pagamento</h1>
+
+                        <div class="cards-pagamentos">
+                                <label for="dinheiro">dinheiro</label>
+                            <input type="radio" class="inputs" name="formaDepagamento" id="dinheiro">
+                        </div>
+                        
+                        <div class="cards-pagamentos">
+                            <label for="pix">Pix</label>
+                            <input type="radio" class="inputs" name="formaDepagamento" id="pix">
+                        </div>
+                        
+                        <div style="margin-bottom: 1rem;" class="cards-pagamentos">
+                            <label for="cartao">Cartão</label>
+                            <input type="radio" class="inputs" name="formaDepagamento" id="cartao">
+                        </div>
+                    </div>
+            </div>
+
+            <div class="finalizar">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <h5>Frete: <strong>calculado após pedido</strong></h5>
+
+                    <div>
+                        <h5>Total parcial</h5>
+                        <h5 class="total">R$ 00,00</h5>
+                    </div>
+                </div>
+                
+                <button id="mandar_para_whatzap">Enviar Pedido Por WhatsApp</button>
+            </div>
+        
+        </div>
+    
     </div>
     
     <script src="client.js"></script>
