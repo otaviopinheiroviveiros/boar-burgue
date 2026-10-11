@@ -41,7 +41,7 @@ const totalparcial = document.querySelector(".total")
 mudarclasseENTREGA.addEventListener("click",mudarclasseEntrega)
 mudarclasseRETIRADA.addEventListener("click",mudarclasseREtirada)
 const mandarprozap = document.getElementById("mandar_para_whatzap")
-mandarprozap.addEventListener("click",pedidoWHAZAp)
+mandarprozap.addEventListener("click",verificarelementos)
 
 window.addEventListener("load",buscarProdutos)
 
@@ -80,203 +80,203 @@ async function buscarProdutos(){
         const secaoBatatas = document.createElement("section")
         const secaoHot_dog = document.createElement("section")
         const secaoBebidas = document.createElement("section")
+        const produto_disponivel = produtos.filter(produto => produto.disponivel  === true)
         
-        produtos.forEach(produto =>{        
-            if(produto.categoria_id === 1){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-
-                card.addEventListener("click",() =>{
-                    mostrarDescricao(produto)
-                })
-                
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoTradicionais.id = "Tradicional"
-                secaoTradicionais.appendChild(card)
-            }        
-
-            if(produto.categoria_id === 2){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-                card.addEventListener("click",() =>{ 
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoArtesanais.id = "Artesanal"
-                secaoArtesanais.appendChild(card)
-            }  
-
-            if(produto.categoria_id === 3){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-                card.addEventListener("click",()=>{
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoMacarronada.id = "Macarronada"
-                secaoMacarronada.appendChild(card)
-            }
-
-            if(produto.categoria_id === 4){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img") 
-                card.addEventListener("click",() =>{
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoLasanha.id = "Lasanha"
-                secaoLasanha.appendChild(card)
-            }
-
-            if(produto.categoria_id === 5){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-                card.addEventListener("click",()=>{
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoCombo.id = "Combo"
-                secaoCombo.appendChild(card)
-            }
-
-            if(produto.categoria_id === 6){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-                card.addEventListener("click",()=>{
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoBatatas.id = "Batata"
-                secaoBatatas.appendChild(card)
-            }
-
-            if(produto.categoria_id === 7){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-                card.addEventListener("click",()=>{
-                    mostrarDescricao(produto)
-                })
-
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoHot_dog.id = "hot-dog"
-                secaoHot_dog.appendChild(card)
-            }
-
-            if(produto.categoria_id === 8){
-                const card = document.createElement("div")
-                const nome = document.createElement("h3")
-                const descricao = document.createElement("p")
-                const preco = document.createElement("h4")
-                const img = document.createElement("img")
-
-                card.addEventListener("click",()=>{
-                    mostrarDescricao(produto)
-                })
-                
-                img.src = produto.img_url
-                img.className = "img-produto"
-                nome.textContent = produto.nome
-                preco.textContent = `R$ ${produto.preco},00`
-                descricao.textContent = produto.descricao
-                card.append(img)
-                card.append(nome)
-                card.append(descricao)
-                card.append(preco)
-                secaoBebidas.id = "Bebidas"
-                secaoBebidas.appendChild(card)
-            }
-
-            conteudo_conteirMOstrarProdutos.appendChild(secaoTradicionais)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoArtesanais)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoMacarronada)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoLasanha)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoHot_dog)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoCombo)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoBatatas)
-            conteudo_conteirMOstrarProdutos.appendChild(secaoBebidas)
-            
+        produto_disponivel.forEach(produto =>{
+                if(produto.categoria_id === 1){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+    
+                    card.addEventListener("click",() =>{
+                        mostrarDescricao(produto)
+                    })
+                    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoTradicionais.id = "Tradicional"
+                    secaoTradicionais.appendChild(card)
+                }        
+    
+                if(produto.categoria_id === 2){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+                    card.addEventListener("click",() =>{ 
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoArtesanais.id = "Artesanal"
+                    secaoArtesanais.appendChild(card)
+                }  
+    
+                if(produto.categoria_id === 3){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+                    card.addEventListener("click",()=>{
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoMacarronada.id = "Macarronada"
+                    secaoMacarronada.appendChild(card)
+                }
+    
+                if(produto.categoria_id === 4){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img") 
+                    card.addEventListener("click",() =>{
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoLasanha.id = "Lasanha"
+                    secaoLasanha.appendChild(card)
+                }
+    
+                if(produto.categoria_id === 5){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+                    card.addEventListener("click",()=>{
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoCombo.id = "Combo"
+                    secaoCombo.appendChild(card)
+                }
+    
+                if(produto.categoria_id === 6){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+                    card.addEventListener("click",()=>{
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoBatatas.id = "Batata"
+                    secaoBatatas.appendChild(card)
+                }
+    
+                if(produto.categoria_id === 7){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+                    card.addEventListener("click",()=>{
+                        mostrarDescricao(produto)
+                    })
+    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoHot_dog.id = "hot-dog"
+                    secaoHot_dog.appendChild(card)
+                }
+    
+                if(produto.categoria_id === 8){
+                    const card = document.createElement("div")
+                    const nome = document.createElement("h3")
+                    const descricao = document.createElement("p")
+                    const preco = document.createElement("h4")
+                    const img = document.createElement("img")
+    
+                    card.addEventListener("click",()=>{
+                        mostrarDescricao(produto)
+                    })
+                    
+                    img.src = produto.img_url
+                    img.className = "img-produto"
+                    nome.textContent = produto.nome
+                    preco.textContent = `R$ ${produto.preco},00`
+                    descricao.textContent = produto.descricao
+                    card.append(img)
+                    card.append(nome)
+                    card.append(descricao)
+                    card.append(preco)
+                    secaoBebidas.id = "Bebidas"
+                    secaoBebidas.appendChild(card)
+                }
+    
+                conteudo_conteirMOstrarProdutos.appendChild(secaoTradicionais)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoArtesanais)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoMacarronada)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoLasanha)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoHot_dog)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoCombo)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoBatatas)
+                conteudo_conteirMOstrarProdutos.appendChild(secaoBebidas)        
             
         });
     }
@@ -390,6 +390,7 @@ let novopreco = 0
 let H2quantidade_adicional = null
 
 async function mostrarDescricao(produto){
+    carregandodescricao()
     precoProduto = produto.preco
     novopreco = produto.preco
     produtoClicado = produto
@@ -534,10 +535,10 @@ function adicionarAOcarinho(){
     let cardobervacao = conteudo_descricao.querySelector("input").value
     let card_clidado = conteinerAdicionais.querySelectorAll(".selecionado")
     
-    if(card_clidado.length === 0 && cardobervacao.length > 1){
+    if(card_clidado.length === 0 && cardobervacao?.length > 1){
         carrinho.push({nome:produtoClicado.nome,preco:produtoClicado.preco,quantidade:quantidade_preoco_produto.textContent,observacao:cardobervacao,img:produtoClicado.img_url})
     
-    }else if(cardobervacao.length === 0  && card_clidado.length >= 1){
+    }else if(cardobervacao?.length === 0  && card_clidado.length >= 1){
         card_clidado.forEach(card =>{
         carrinho_adicional.push({nome:card.querySelector("h3").dataset.id,preco:card.querySelector("p").dataset.preco,quantidade:card.querySelector("h2").dataset.quantidade,img:produtoClicado.img_url})
         })
@@ -545,7 +546,7 @@ function adicionarAOcarinho(){
         carrinho.push({nome:produtoClicado.nome,preco:produtoClicado.preco,quantidade:quantidade_preoco_produto.textContent,adicional:carrinho_adicional,img:produtoClicado.img_url})
         carrinho_adicional = []
     
-    }else if(card_clidado.length >= 1 && cardobervacao.length > 1){
+    }else if(card_clidado.length >= 1 && cardobervacao?.length > 1){
         card_clidado.forEach(card =>{
         carrinho_adicional.push({nome:card.querySelector("h3").dataset.id,preco:card.querySelector("p").dataset.preco,quantidade:card.querySelector("h2").dataset.quantidade,img:produtoClicado.img_url})
         })
@@ -565,6 +566,8 @@ function adicionarAOcarinho(){
     conteinerAdicionais.innerHTML = ""
 }
 
+let totalpedido = null
+
 function mostrarcarrinho(){
     menu.style.display = "none"
     chamarCarrinho.style.display = "none"
@@ -573,7 +576,6 @@ function mostrarcarrinho(){
     conteiner_carrinho.style.display = "block"
     
     let subVALOR_adicional = null
-    let totalpedido = 0
     let totalVALOR_adicional = null
     let total = document.createElement("h5")
     const mensagem = document.createElement("h5")
@@ -659,7 +661,6 @@ function mostrarcarrinho(){
         cardpreco.append(subtotal)
         conteudo_carrinho.appendChild(cardPAI)
     })
-    // carrinho.push({total:totalpedido})
     cardpreco.append(total)
     cardpreco.append(mensagem)
     cardpreco.append(butao_confirma_pedido)
@@ -691,13 +692,8 @@ function limpar_carrinho(){
 function finalizar_pedido(){
     conteiner_carrinho.style.display = "none"
     conteiner_finalizar_pedido.style.display = "block"
-    let total = null
 
-    carrinho.forEach(produto =>{
-        total = produto.total
-    })
-    
-    totalparcial.textContent = `R$ ${total},00`
+    totalparcial.textContent = `R$ ${totalpedido},00`
 }
 
 function mudarclasseEntrega(){
@@ -714,30 +710,109 @@ function mudarclasseREtirada(){
     localizacao.style.display = "block"
 }
 
-function pedidoWHAZAp(){
-    let total = null
-    let mensagem = `*🍔 NOVO PEDIDO*:\n\n
-    🛒 Itens:\n`
-    console.log(carrinho)
-    carrinho.forEach(produto =>{
-        total += produto.quantidade * produto.preco 
-        mensagem += `\n\n${produto.quantidade} - ${produto.nome}\n`
-        if(produto.adicional?.length >= 1 && produto.observacao){
-            produto.adicional.forEach(adicional=>{
-                total += adicional.preco * adicional.quantidade
-                mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n_Observação_: *${produto.observacao}*\n`
-            })
-        }else if(produto.adicional?.length >= 1){
-            produto.adicional.forEach(adicional=>{
-                total += adicional.preco * adicional.quantidade
-                mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n`
-            })
-        }else if(produto.observacao?.length >= 1){
-            mensagem += `_Observação_: *${produto.observacao}*\n`                
-        }
-    })
+let selecionado_pagamento = null
 
-    mensagem += `\n\ntotal sem taxa de Entrega: *$R ${total},00*`
-console.log(mensagem)
+function verificarelementos(){
+    selecionado_pagamento = document.querySelector('input[name="formaDepagamento"]:checked')
+    if(mudarclasseENTREGA.className === "card-entrega card-entregaCLICADO" || mudarclasseRETIRADA.className === "card-retirada card-entregaCLICADO"){
+        if(!selecionado_pagamento){
+            alert("selecione a forma de pagamento!")
+        }else{
+            pegarELementos()
+        }
+    }else{
+        alert("selecione a forma de entrega!")
+    }
 
 }
+
+function pegarELementos(){
+    let forma_de_pagamento = selecionado_pagamento.value
+    
+    if(mudarclasseENTREGA.className === "card-entrega card-entregaCLICADO"){
+        const form = document.getElementById("endereco-de-entrega")
+        
+        // o reportValidity confere as regras do HTML, como o required. Devolve true se está tudo ok e false se algum campo falhou.
+        if(!form.reportValidity()) return
+    
+        // new formdata gera um objeto que reune todos os campos do formulario que tem o atributo name
+        const dados = new FormData(form)
+        const rua_avenida = dados.get('RuaAvenida').trim()
+        const numero = dados.get('numero').trim()
+        const bairro = dados.get('bairro').trim()
+        const quadra = dados.get('quadra').trim()
+        const referencia = dados.get('pontoDEreferencia').trim()
+        if (!bairro || !rua_avenida || !quadra) {
+            alert('Preencha os campos do endereço!')
+            return
+        }
+
+        const retirada = null
+        pedidoWHAZAp(retirada,bairro,rua_avenida,quadra,referencia,numero)
+    }else{
+        const retirada = 'Retirada'
+        pedidoWHAZAp(retirada)
+    }
+}
+
+function pedidoWHAZAp(retirada,bairro,rua_avenida,quadra,referencia,numero){
+    let mensagem = `🍔 *NOVO PEDIDO*:\n\n`
+    mensagem += `🛒 Itens:\n`
+    carrinho.forEach(produto =>{
+    mensagem += `\n${produto.quantidade} - ${produto.nome}\n`
+    if(produto.adicional?.length >= 1 && produto.observacao){
+            mensagem += `_Observação_: *${produto.observacao}*\n`
+            produto.adicional.forEach(adicional=>{
+                mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n`
+            })
+    }else if(produto.adicional?.length >= 1){
+        produto.adicional.forEach(adicional=>{
+            mensagem += `*${adicional.quantidade}* - _${adicional.nome}_\n`
+        })
+    }else if(produto.observacao?.length >= 1){
+        mensagem += `_Observação_: *${produto.observacao}*\n`                
+    }
+    })
+    
+    if(retirada?.length > 1){
+        mensagem += `\n\nForma de entrega 🚚: ${retirada}`
+    }else{
+        mensagem += `\n\nForma de entrega: Delivery\n`
+        mensagem += `Bairro: ${bairro}\n` 
+        mensagem += `Rua: ${rua_avenida}\n`
+        mensagem += `Numero: ${numero}\n`
+        mensagem += `Quadra:${quadra}\n` 
+        mensagem += `Referencia: ${referencia}\n`
+    }
+    
+    mensagem += `\nForma de pagamento 💳:*${selecionado_pagamento.value.toUpperCase()}*`
+    mensagem += `\ntotal sem taxa de Entrega 💰: *$R ${totalpedido},00*`
+    enviarMEnsagem(mensagem)
+}
+
+function enviarMEnsagem(mensagem){
+    const numero = '5598981328072'
+    const url = `https:/wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
+    console.log(url)
+    window.open(url,'_blank')
+}
+
+function carregardadapio(){
+    const div_carregamento = document.getElementById("carregando")
+    div_carregamento.style.display = "flex"
+    setTimeout(function(){
+        div_carregamento.style.display = "none"
+    },1500)
+}
+
+function carregandodescricao(){
+    const p = document.getElementById("mensagem-carregamento")
+    const div_carregamento = document.getElementById("carregando")
+    div_carregamento.style.display = "flex"
+    p.textContent = "Carregando Descrição"
+    setTimeout(function(){
+        div_carregamento.style.display = "none"
+    },1200)
+}
+
+window.addEventListener("load",carregardadapio())

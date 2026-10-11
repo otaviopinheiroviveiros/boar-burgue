@@ -120,12 +120,11 @@ body{
     display: none;
     background-color: white;
     border-radius: 20px;
-    width: 25rem;
-    grid-template: 2rem repeat(15,50px) repeat(5,50px) / repeat(7,50px);
+    width: 30rem;
+    grid-template: 2rem repeat(15,50px) repeat(5,50px) / repeat(8,50px);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
 .rederizar-Adicionais div.cardADICionais.selecionado{
@@ -133,7 +132,7 @@ body{
 }
 
 .conteudo-descricao{
-    grid-area: 2/1 / 12/8;
+    grid-area: 2/1 / 12/9;
 }
 
 .img-doProduto{
@@ -157,15 +156,17 @@ body{
     background-color: transparent;
     color:white;
     border: none;
+    padding-right: 2rem;
     font-size: 1.3rem;
 }
 
 .controleDEquantidade{
     display: flex;
     align-items: center;
-    position: fixed;
-    right: 1rem;
-    bottom: 1.2rem;
+    margin-bottom: 1rem;
+    position: sticky;
+    bottom: 1rem;
+    grid-area: 21/-4 / 22/ -1;
 }
 
 .controleDEquantidade button{
@@ -177,21 +178,22 @@ body{
 }
 
 .elementosADDcarinho{
-    gap: 2rem;
     display: flex;
-    align-items: center; 
+    align-items: center;
+    margin: auto; 
     justify-content: space-between;
     background-color:red;
     padding: 1rem;
-    border-radius: 10px; 
+    border-radius: 10px;
     margin-bottom: 0.5rem;
-    position: fixed;
-    left: 1rem;
-    bottom: 0.5rem;
+    position: sticky;
+    bottom: 1rem;
+    grid-area: 21/1 / 23/-5;
 }
 
 .elementosADDcarinho h3{
     margin: 0;
+    white-space: nowrap;
     color: white;
     font-size: 1.3rem;
 }
@@ -203,19 +205,20 @@ body{
 }
 
 #voltarPARAprincipal{
+    margin: auto;
     z-index: 1;
     border-radius: 10px;
     font-size: 1.4rem;
     padding: 0.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    position:fixed;
+    position:sticky;
     top: 1rem;
     left: 2rem;
 }
 
 .rederizar-Adicionais{
-    grid-area: -9/1 / -4/8;
+    grid-area: -9/1 / -4/9;
 }
 
 .rederizar-Adicionais div.cardADICionais{
@@ -241,6 +244,10 @@ body{
     border-radius: 10px;
 }
 
+.adicionais{
+    padding-right: 4rem;
+}
+
 .rederizar-Adicionais h2{
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -252,10 +259,11 @@ body{
 }
 
 input{
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-top: 0.5rem;
     width: 21.5rem;
-    padding: 0.4rem;
+    padding: 1rem;
+    padding-bottom: 0.5rem;
     border-radius: 10px;
 }
 
@@ -288,7 +296,7 @@ input::placeholder{
 }
 
 .titulo-carrinho{
-    width: 25rem;
+    width: 30rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -428,9 +436,11 @@ input::placeholder{
 }
 
 .conteudo-resumo-devalores div{
+    width: 25rem;
     padding: 1rem;
     border: solid gray;
     border-radius: 20px;
+    margin: auto;
 }
 
 .butao-finalizar-pedido{
@@ -448,7 +458,7 @@ input::placeholder{
 
 .conteiner-finalizar-pedido{
     display: none;
-    width: 25rem;
+    width: 30rem;
     margin: auto;
     margin-top: 1rem;
     background-color: white;
@@ -467,12 +477,10 @@ input::placeholder{
     box-shadow: 0.2rem 0.2rem 1rem gray;
 }
 
-
 .cards-pagamentos:has(input:checked){
     box-shadow: 1rem 1rem 1rem gray;
     border-color: green;
 }
-
 
 .cardFORmadepagamento{
     width: 80%;
@@ -523,6 +531,16 @@ input::placeholder{
     align-items: center;
 }
 
+.card-entrega button{
+    background-color: transparent;
+    font-size: 2rem;
+}
+
+.card-retirada button{
+    background-color: transparent;
+    font-size: 2rem;
+}
+
 .entrega{
     border: none;
     font-size: 1.5rem;
@@ -554,7 +572,7 @@ input::placeholder{
     display: none;
     padding-top: 1rem;
     text-decoration: none;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     white-space: nowrap;
 }
 
@@ -568,7 +586,7 @@ input::placeholder{
 }
 
 .card-entregaCLICADO{
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 20px;
     border: solid gray;
     box-shadow: 1rem 1rem 1rem gray;
@@ -585,19 +603,52 @@ input::placeholder{
 }
 
 .total{
-    font-size: 1.6rem;
+    font-size: 2rem;
     color: rgb(235, 6, 6);
 }
 
 #mandar_para_whatzap{
     border: none;
     margin-top: 1rem;
+    margin-left: 3rem;
     padding: 1rem;
     font-size: 1.6rem;
     background-color: red;
     border-radius: 20px;
     color: white;
 }
+
+#endereco-de-entrega input{
+    padding: 1rem;
+    padding-bottom: 0.4rem;
+    font-size: 1.5rem;
+}
+
+#carregando{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bola-de-carregamento{
+    margin-bottom: 0.2rem;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    border: solid 4px #ddd;
+    border-top-color: #e63946;
+    animation: girar 1s linear infinite;
+}
+
+@keyframes girar {to {transform: rotate(360deg);}}
 
 @media (max-width:375px){
     .conteiner-descricao{

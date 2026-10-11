@@ -102,11 +102,12 @@
                                 
                                 <div class="entrega-endereco">
                                     <h4>Endereço de Entrega</h4>
-                                    <form action="">
-                                        <input type="text" placeholder="Bairro">
-                                        <input type="number" placeholder="Rua/Avenida">
-                                        <input type="text" placeholder="Quadra">
-                                        <input type="text" placeholder="Ponto de referência">
+                                    <form id="endereco-de-entrega">
+                                        <input type="text" name="bairro" placeholder="Bairro">
+                                        <input type="text" name="RuaAvenida" placeholder="Rua/Avenida">
+                                        <input type="text" name="numero" placeholder="numero">
+                                        <input type="text" name="quadra" placeholder="Quadra">
+                                        <input type="text" name="pontoDEreferencia" placeholder="Ponto de referência">
                                     </form>
                                 </div>
                                 
@@ -121,18 +122,18 @@
                         <h1>Forma de Pagamento</h1>
 
                         <div class="cards-pagamentos">
-                                <label for="dinheiro">dinheiro</label>
-                            <input type="radio" class="inputs" name="formaDepagamento" id="dinheiro">
+                            <label for="dinheiro">dinheiro</label>
+                            <input type="radio" class="inputs" name="formaDepagamento" id="dinheiro" value="dinheiro">
                         </div>
                         
                         <div class="cards-pagamentos">
                             <label for="pix">Pix</label>
-                            <input type="radio" class="inputs" name="formaDepagamento" id="pix">
+                            <input type="radio" class="inputs" name="formaDepagamento" id="pix" value="pix">
                         </div>
                         
                         <div style="margin-bottom: 1rem;" class="cards-pagamentos">
                             <label for="cartao">Cartão</label>
-                            <input type="radio" class="inputs" name="formaDepagamento" id="cartao">
+                            <input type="radio" class="inputs" name="formaDepagamento" id="cartao" value="cartao">
                         </div>
                     </div>
             </div>
@@ -151,8 +152,14 @@
             </div>
         
         </div>
+        
+        <div id="carregando">
+            <div class="bola-de-carregamento"></div>
+            <p id="mensagem-carregamento">Carregadando Cardápio...</p>
+        </div>
     
     </div>
+
     
     <script src="client.js"></script>
 </body>
