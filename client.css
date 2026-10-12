@@ -164,6 +164,7 @@ body{
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
+    margin-left: 3rem;
     position: sticky;
     bottom: 1rem;
     grid-area: 21/-4 / 22/ -1;
@@ -212,6 +213,8 @@ body{
     padding: 0.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    background-color: white;
+    border: solid blue;
     position:sticky;
     top: 1rem;
     left: 2rem;
@@ -653,30 +656,63 @@ input::placeholder{
 @media (max-width:375px){
     .conteiner-descricao{
         width: 100%;
+        grid-template: 2rem repeat(15,50px) repeat(7,50px) / repeat(8,50px);
     }
+
+    .conteudo-descricao{
+        width: 90%;
+        margin: auto;
+    }
+
+    .rederizar-Adicionais{
+        grid-area: -11/1 / -2/-1;
+        width: 90%;
+        margin: auto;
+        margin-bottom: 5rem;
+    }
+
+    .elementosADDcarinho{
+        grid-area: -2/1 / -1/-5;
+        padding: 0.8rem;
+        padding-left: 0.2rem;
+        margin: 0;
+        margin-left: 1rem;
+    }
+
+    #adicionar-ao-carrinho{
+        padding-right: 0.4rem;
+    }
+
+    .controleDEquantidade{
+        grid-area: -2/-5 / -2/-2;
+    }
+
     .conteiner-produtos{
         width: 100%;
     }
 
-    .titulo{
+    .conteiner-carrinho{
+        width: 100%;
+    }
+    
+    .conteiner-finalizar-pedido{
+        width: 100%;
+        margin: auto;
+        margin-top: 1rem;
+    }
+
+    .titulo-carrinho{
+        width: 100%;
+    }
+    .card-produto-carrinho{
         width: 100%;
     }
 
-    .conteiner-produtos div{
-        border: none;
-        border-radius: 0;
-        border-top: solid gray 1px;
-        border-bottom: solid gray 1px;    
+    .card_produtos_carrinho{
+        width: 100%;
     }
-
-    .controleDEquantidade{
-        position: fixed;
-        right: 0.2rem;
+    
+    .conteudo-resumo-devalores div{
+        width: 100%;
     }
-
-    .elementosADDcarinho{
-        position: fixed;
-        left: 0.2rem;
-    }
-
 }
