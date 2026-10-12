@@ -1,33 +1,40 @@
 const conteudo_conteirMOstrarProdutos = document.querySelector(".conteiner-produtos")
 const conteiner_principal = document.querySelector(".conteiner_principal")
 const butoes = document.querySelectorAll("[data-categoria]")
-const conteiner_mostrarDEscricao = document.querySelector(".conteiner-descricao")
+
 const conteiner_titulo = document.querySelector("header")
+
+const conteiner_mostrarDEscricao = document.querySelector(".conteiner-descricao")
+const valorDEscricao = document.getElementById("valor")
 const conteudo_descricao = document.querySelector(".conteudo-descricao")
+
 const addcarinho = document.getElementById("adicionar-ao-carrinho")
 addcarinho.addEventListener("click",adicionarAOcarinho)
+
+const conteiner_carrinho = document.querySelector(".conteiner-carrinho")
 const valorProduto  =  document.getElementById("valor")
 const quantidade_preoco_produto = document.getElementById("quantidade")
 const chamarCarrinho = document.querySelector("#chamar-carrinho")
-const conteiner_carrinho = document.querySelector(".conteiner-carrinho")
-let butao_confirma_pedido = null
-const voltar_do_carrinho = document.getElementById("butao-voltar-carrinho")
 const limparCArrinho = document.getElementById("limpar-carrinho")
-voltar_do_carrinho.addEventListener("click",voltarDOcarrinho)
-limparCArrinho.addEventListener("click",limpar_carrinho)
-const resumo_de_valores = document.querySelector(".conteudo-resumo-devalores")
+const voltar_do_carrinho = document.getElementById("butao-voltar-carrinho")
 const conteudo_carrinho = document.querySelector(".conteudo-mostrarcarrinho")
-
+voltar_do_carrinho.addEventListener("click",voltarDOcarrinho)
 chamarCarrinho.addEventListener("click",mostrarcarrinho)
+limparCArrinho.addEventListener("click",limpar_carrinho)
+
+const resumo_de_valores = document.querySelector(".conteudo-resumo-devalores")
+
 
 const conteiner_finalizar_pedido = document.querySelector(".conteiner-finalizar-pedido")
-const quantidademais = document.getElementById("quantidademais")
+let butao_confirma_pedido = null
+
+const menu = document.querySelector(".menu-de-navegacao")
+
 const quantidademenos = document.getElementById("quantidademenos")
+const quantidademais = document.getElementById("quantidademais")
 quantidademais.addEventListener("click",addCARINHOmais)
 quantidademenos.addEventListener("click",addCARINHOmenos)
 const quantidade = document.getElementById("quantidade")
-const menu = document.querySelector(".menu-de-navegacao")
-const valorDEscricao = document.getElementById("valor")
 const conteinerAdicionais = document.querySelector(".rederizar-Adicionais")
 const voltarPricipal = document.getElementById("voltarPARAprincipal")
 voltarPricipal.addEventListener("click",voltarDAdescricao)
@@ -35,11 +42,12 @@ addcarinho.addEventListener("click",adicionarAOcarinho)
 
 const mudarclasseENTREGA = document.querySelector(".card-entrega")
 const mudarclasseRETIRADA = document.querySelector(".card-retirada")
+mudarclasseENTREGA.addEventListener("click",mudarclasseEntrega)
+mudarclasseRETIRADA.addEventListener("click",mudarclasseREtirada)
+
 const localizacao = document.getElementById("Localizacao")
 const formDEendereco = document.querySelector(".entrega-endereco")
 const totalparcial = document.querySelector(".total")
-mudarclasseENTREGA.addEventListener("click",mudarclasseEntrega)
-mudarclasseRETIRADA.addEventListener("click",mudarclasseREtirada)
 const mandarprozap = document.getElementById("mandar_para_whatzap")
 mandarprozap.addEventListener("click",verificarelementos)
 
@@ -54,6 +62,8 @@ butoes.forEach(botao =>{
     })
 })
 
+let varialvelDEcontrole = null
+
 async function buscarProdutos(){
     try{
         const resposta = await fetch(
@@ -66,12 +76,14 @@ async function buscarProdutos(){
             }
         )
 
+        varialvelDEcontrole = resposta.ok
+
         if(!resposta.ok){
             console.log("erro html:",resposta.status)
         }
         
         const produtos = await resposta.json()
-        
+
         const secaoTradicionais = document.createElement("section")
         const secaoArtesanais = document.createElement("section")
         const secaoMacarronada = document.createElement("section")
@@ -281,6 +293,7 @@ async function buscarProdutos(){
         });
     }
     catch(erro){
+        alert("conexão estável!")
         console.log("erro de conexão:",erro)
     }    
     
@@ -790,7 +803,55 @@ function pedidoWHAZAp(retirada,bairro,rua_avenida,quadra,referencia,numero){
     enviarMEnsagem(mensagem)
 }
 
-function enviarMEnsagem(mensagem){
+async function enviarMEnsagem(mensagem){
+    let pedidoId = null
+    try{
+        const resposta = await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos`,{
+            method: 'POST',
+            headers: {
+                    'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    'Content-Type': 'Application/json',
+                    'Prefer':'return=representation'
+                    },
+            body: JSON.stringify({
+                status: "agurdando",
+                form_pagamento: `${selecionado_pagamento.value.toUpperCase()}`,
+                total: `${totalpedido}`
+            })
+        })
+        
+        if(!resposta.ok){
+            console.log("erro html:",resposta.status)
+        }
+        
+        const dados = await resposta.json()
+        pedidoId = dados[0].id_pedido
+    }
+    catch(erro){
+        console.log("erro de conexão:",erro)
+    }
+
+    console.log(pedidoId)
+    const itens = carrinho.map(produto => ({
+        nome_produto: produto.nome,
+        quantidade: Number(produto.quantidade), 
+        pedido_id: pedidoId,
+        adicionais: produto.adicional || []
+    }))
+    
+    await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos`,{
+        method: 'POST',
+        headers:{
+            'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+            'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+            'Content-Type': 'Application/json',
+        },
+        
+        body:JSON.stringify(itens)
+    
+    })
+
     const numero = '5598981328072'
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
     window.open(url,'_blank')
@@ -801,7 +862,7 @@ function carregardadapio(){
     div_carregamento.style.display = "flex"
     setTimeout(function(){
         div_carregamento.style.display = "none"
-    },1500)
+    },1500)    
 }
 
 function carregandodescricao(){
@@ -811,7 +872,7 @@ function carregandodescricao(){
     p.textContent = "Carregando Descrição"
     setTimeout(function(){
         div_carregamento.style.display = "none"
-    },1200)
+    },1000)
 }
 
 window.addEventListener("load",carregardadapio())
