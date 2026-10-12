@@ -792,7 +792,7 @@ function pedidoWHAZAp(retirada,bairro,rua_avenida,quadra,referencia,numero){
 
 function enviarMEnsagem(mensagem){
     const numero = '5598981328072'
-    const url = `https:/wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
     console.log(url)
     window.open(url,'_blank')
 }
