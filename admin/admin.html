@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <title>Boar Burger | Painel administrativo</title>
+</head>
+
+<body>
+    <!-- CONTEINER FAZER LOGIN -->
+    <section class="conteiner-principal escondido" id="area-login">
+        <!-- ÁREA DE LOGIN -->
+        <section class="conteiner-login">
+            <header class="cabecalho-login">
+                <div class="logo">🍔</div>
+
+                <h1>Boar Burger</h1>
+
+                <p>Bem-vindo ao painel administrativo.
+                    Entre para continuar.</p>
+            </header>
+
+            <form id="form-login">
+                <div class="campo">
+                    <label for="usuario">Nome de usuário</label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        name="usuario"
+                        placeholder="Digite seu usuário"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua senha"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button class="botao-entrar" type="submit">
+                    Entrar
+                </button>
+            </form>
+        </section>
+    
+    </section>
+    
+    <!-- CONTEINER MENU ADMIN -->
+    <section class="area-celular escondido" id="area-admin">
+
+            <div class="celular">
+                <div class="tela-celular">
+                    <header class="cabecalho-celular">
+                        <p class="marca">🍔 Boa Burger</p>
+
+                        <h2>Olá, administrador!</h2>
+
+                        <p>
+                            O que você deseja fazer hoje?
+                        </p>
+                    </header>
+
+                    <nav class="menu-celular">
+
+                        <button id="chamar-cadastrarPEDIDO" class="botao-menu " type="button">
+                            <span class="icone">＋</span>
+                            <span class="texto-menu">Cadastrar pedido</span>
+                            <span class="seta">›</span>
+                        </button>
+
+                        <button class="botao-menu"  type="button" id="CHAMARvisao-geral">
+                            <span class="icone">▥</span>
+                            <span class="texto-menu">Visão geral</span>
+                            <span class="seta">›</span>
+                        </button>
+
+                        <button class="botao-menu" type="button" id="ChamarPEDIDOS">
+                            <span class="icone">▤</span>
+                            <span class="texto-menu">Pedidos</span>
+                            <span class="seta">›</span>
+                        </button>
+
+                        <button class="botao-menu" type="button" id="chamarCARDaPIo">
+                            <span class="icone">☷</span>
+                            <span class="texto-menu">Cardápio</span>
+                            <span class="seta">›</span>
+                        </button>
+
+                    </nav>
+                </div>
+            </div>
+    </section>
+
+    <!-- CONTEINER CADASTRAR PEDIDO -->
+    <section class="cadastrar-pedido escondido" id="cadastrarPEDIDO">
+        <div style="text-align: center;">
+            <h1>Cadastrar Pedidido</h1>
+        </div>
+
+        <button id="voltar-cadastrarPEdido">voltar</button>
+
+        <div class="produtos">
+        </div>
+        <button id="Cadastrar">Cadastrar</button>
+    </section>
+
+    <!-- CONTEINER MOSTRAR CADASTRADO PEDIDO -->  
+    <section id="mostrarProdutocastrado" class="confirma-cadastro-de-pedido escondido">
+        <div class="butoes">
+            <button id="voltarmostarcadastro">voltar</button>
+            <button id="cancelarCAdastro">cancelar</button>
+        </div>
+        <div class="produtos-conteudo">
+        </div>
+
+        <div class="resumo-total">
+            <h4>Resumo de valores</h4>
+        </div>
+
+        <div class="card-selecionar-pagamento">
+            <h2>Forma de pagamento</h2>
+            <input type="" placeholder="digite a forma de pagamento" id="fomaDEpagamentoCADAsTRopedido">
+        </div>
+        
+        <div class="finalizar">
+            <button id="finalizar-cadastro">Cadastrar Pedido</button>
+        </div>
+    
+    </section>
+
+    <!-- CONTEINER VISAO GERAL -->
+    <section class="conteiner-visao-geral" id="visao-geral">
+        <button id="voltarDEvisaogeral">voltar</button>
+            
+        <div class="card-resumo-do-dia">
+                <div class="cabecalho-visaogeral">
+                    <h2>Visão Geral</h2>
+                    
+                    <div class="area-data">
+                        <button class="botao-data">
+                            <span id="texto-data"></span>
+                            <span class="seta">▾</span>
+                        </button>
+                        <input type="date" id="input-data">
+                    </div>
+                
+                </div>
+
+                <h3 id="tituloREsumo">Resumo do dia</h3>
+                
+                <div class="mostrarRElatoriododia">
+                    <div class="faturamento">
+                        <img src="../img/cifrao.png" style="width: 4rem;">
+                        <h3>Faturamento</h3>
+                        <h4 id="faturamentoDOdia"></h4>
+                        <p><strong class="poercecntagemPositiva" id="crescimentoPORcemtagem"></strong> em relação a ontem</p>
+                    </div>
+                    <div class="pedidosDOdia">
+                        <img src="../img/pedido.png" style="width: 4rem;">
+                        <h3>Pedidos</h3>
+                        <h4 id="PedididosdoDIA"></h4>
+                        <p><strong class="poercecntagemPositiva" id="crescimentoPORcemPEDIDO"></strong> em relação a ontem</p>
+                    </div>
+                </div>
+                
+        </div>
+
+        <div class="formasDEpagamento">
+            <div class="pix">
+                <img src="../img/pix.jpeg" style="width: 4rem; border-radius: 20px;">
+                <h4>pix</h4>
+                <p id="totalPIX"></p>
+                <p><strong class="poercecntagemPositiva" id="porcentagemPIX"></strong></p>
+            </div>
+            
+            <div class="dinheiro">
+                <img src="../img/dindin.png" style="width: 4rem; border-radius: 20px;">
+                <h4>dinheiro</h4>
+                <p id="totalDINheiro"></p>
+                <p><strong class="poercecntagemPositiva" id="porcentagemDInheiro"></strong></p>
+            </div>
+            
+            <div class="cartao">
+                <img src="../img/cartao-de-credito.png" style="width: 4rem; border-radius: 20px;">
+                <h4>cartao</h4>
+                <p id="totalCARTAO"></p>
+                <p><strong class="poercecntagemPositiva" id="porcentagemCARTAO"></strong></p>
+            </div>
+
+        </div>
+
+        <div class="produtos-mais-vendidos">
+        </div>
+        
+    
+
+    </section>
+    <script src="admin.js"></script>
+</body>
+</html>
+

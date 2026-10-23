@@ -62,8 +62,6 @@ butoes.forEach(botao =>{
     })
 })
 
-let varialvelDEcontrole = null
-
 async function buscarProdutos(){
     try{
         const resposta = await fetch(
@@ -75,8 +73,6 @@ async function buscarProdutos(){
                 }
             }
         )
-
-        varialvelDEcontrole = resposta.ok
 
         if(!resposta.ok){
             console.log("erro html:",resposta.status)
@@ -588,7 +584,6 @@ function mostrarcarrinho(){
     conteiner_titulo.style.display = "none"
     conteiner_carrinho.style.display = "block"
     
-    let subVALOR_adicional = null
     let totalVALOR_adicional = null
     let total = document.createElement("h5")
     const mensagem = document.createElement("h5")
@@ -600,7 +595,7 @@ function mostrarcarrinho(){
     const titulo = document.createElement("h2")
     titulo.textContent = "Resumo de valores"
     cardpreco.append(titulo)
-    
+    let subtotalproduto
     carrinho.forEach(Produto =>{
         const cardPAI = document.createElement("div")
         const cardPROduto = document.createElement("div")
@@ -608,9 +603,8 @@ function mostrarcarrinho(){
         const img_produto = document.createElement("img")
         const observacao = document.createElement("p")
         const quantidade = document.createElement("h4")
-        cardPAI.className = "card_produtos_carrinho" 
-        
-        let subtotalproduto = Produto.quantidade * Produto.preco
+        cardPAI.className = "card_produtos_carrinho"
+        subtotalproduto = Produto.quantidade  * Produto.preco
         produto.textContent = Produto.nome
         quantidade.textContent = Produto.quantidade
         img_produto.src = Produto.img
@@ -665,10 +659,10 @@ function mostrarcarrinho(){
 
         }
 
-        totalpedido += subtotalproduto + totalVALOR_adicional
+        totalpedido += subtotalproduto 
         
         const subtotal = document.createElement("h4")
-        subtotal.textContent = `R$ ${Produto.preco},00 x ${Produto.quantidade} = ${subtotalproduto}`
+        subtotal.textContent = `R$ ${Produto.preco},00 x ${Produto.quantidade} = ${Produto.quantidade * Produto.preco}`
         total.textContent = `Total a pagar: R$ ${totalpedido},00`
         
         cardpreco.append(subtotal)
@@ -816,6 +810,7 @@ async function enviarMEnsagem(mensagem){
                     },
             body: JSON.stringify({
                 status: "agurdando",
+                origem: "whatsApp",
                 form_pagamento: `${selecionado_pagamento.value.toUpperCase()}`,
                 total: `${totalpedido}`
             })
@@ -831,13 +826,11 @@ async function enviarMEnsagem(mensagem){
     catch(erro){
         console.log("erro de conexão:",erro)
     }
-
-    console.log(pedidoId)
+    
     const itens = carrinho.map(produto => ({
         nome_produto: produto.nome,
         quantidade: Number(produto.quantidade), 
         pedido_id: pedidoId,
-        adicionais: produto.adicional || []
     }))
     
     await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos`,{
@@ -855,6 +848,9 @@ async function enviarMEnsagem(mensagem){
     const numero = '5598981328072'
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
     window.open(url,'_blank')
+    
+    // atualiza a pagina
+    location.reload()
 }
 
 function carregardadapio(){
