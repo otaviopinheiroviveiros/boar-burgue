@@ -57,7 +57,7 @@
     </section>
     
     <!-- CONTEINER MENU ADMIN -->
-    <section class="area-celular escondido" id="area-admin">
+    <section class="area-celular" id="area-admin">
 
             <div class="celular">
                 <div class="tela-celular">
@@ -76,6 +76,12 @@
                         <button id="chamar-cadastrarPEDIDO" class="botao-menu " type="button">
                             <span class="icone">＋</span>
                             <span class="texto-menu">Cadastrar pedido</span>
+                            <span class="seta">›</span>
+                        </button>
+
+                        <button class="botao-menu"  type="button" id="CHAMAR-operacao">
+                            <span class="icone"><img src="../img/prancheta.png" style="width: 1.5rem;"></span>
+                            <span class="texto-menu">Operação</span>
                             <span class="seta">›</span>
                         </button>
 
@@ -140,7 +146,7 @@
     </section>
 
     <!-- CONTEINER VISAO GERAL -->
-    <section class="conteiner-visao-geral" id="visao-geral">
+    <section class="conteiner-visao-geral escondido" id="visao-geral">
         <button id="voltarDEvisaogeral">voltar</button>
             
         <div class="card-resumo-do-dia">
@@ -205,6 +211,56 @@
         
     
 
+    </section>
+
+    <!-- CONTEINER OPERACAO -->
+    <section class="conteiner-operação escondido" id="operacao">
+        <div class="cabecalho-operacao">
+            <button id="voltar-de-operacao">voltar</button>
+            <h2>Operação</h2>
+        </div>
+
+        <div class="pedidosNOVOs">
+            <button class="butão-chamarconteiner" data-conteiner="pedidos-novos">novos</button>
+            <div class="pedidos-novos" id="pedidos-novos" data-pedidos="conteiner-pedido"></div>
+        </div>
+        
+        <div class="pedidosEmpreparo">
+            <button class="butão-chamarconteiner" data-conteiner="pedido-preparando">preparando</button>
+            <div class="pedidos-em-preparo" id="pedido-preparando" data-pedidos="conteiner-pedido"></div>
+        </div>
+        
+        <div class="pedidosPARAentrega">
+            <button class="butão-chamarconteiner" data-conteiner="pedido-para-entrega">
+                Saiu para entrega
+            </button>
+            <div class="pedidos-saiu-paraENTREga" id="pedido-para-entrega" data-pedidos="conteiner-pedido"></div>
+        </div>
+
+        <div class="pronto">
+            <button class="butão-chamarconteiner" data-conteiner="pronto">Pronto</button>
+            <div class="pedidos-prontos" id="pronto" data-pedidos="conteiner-pedido"></div>
+        </div>
+
+        <div class="conluido">
+            <button class="butão-chamarconteiner" data-conteiner="pedido-conluido">concluido</button>
+            <div class="pedidos-conluidos" id="pedido-conluido" data-pedidos="conteiner-pedido"></div>
+        </div>
+
+    </section>
+    <!-- CONTEINER EDSCRICAO DO PEDIDO ADMIN -->
+    <section class="conteiner-descricãoPEdidoADMIN escondido" id="descricaoADmin">
+        <button id="voltarDEscricaoADmin">voltar</button>
+        <div class="cabecalho-descricao">
+            <p id="numero-pedido"></p>
+            <button id="cancelar-pedido">cancelar</button>
+        </div>
+        <div class="conteudo-descricaoADmin"></div>
+        
+        <div class="pagamentoDEscricaoADmin">
+            <p id="totalPEDIDoDEscricao"></p>
+            <p><span id="formadepagamento"></span></p>
+        </div>
     </section>
     <script src="admin.js"></script>
 </body>

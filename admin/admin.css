@@ -568,6 +568,9 @@ body{
     border: none;
     border-radius: 20px;
     color: var(--branco);
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 1rem;    
     background: var(--vermelho);
 }
 
@@ -629,6 +632,15 @@ p{
     padding: 1rem;
 }
 
+.imgPRodutoMAIsvendido{
+    width: 4rem;
+    height: 4rem;
+    border: solid gray;
+    border-radius: 20px;
+    margin-top: 1rem;
+    object-fit: cover;
+}
+
 .cabecalho-produtos-maisVEnddos button{
     border: none;
     border-bottom: solid 1px red;
@@ -665,4 +677,173 @@ p{
     height: 100%;
     background-color: var(--vermelho);
     border-radius: 10px;
+}
+
+/* conteiner operação */
+.conteiner-operação{
+    width: 30rem;
+    max-width: 100%;
+    background: var(--branco);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.cabecalho-operacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cabecalho-operacao h2{
+    font-size: 2rem;
+    align-self: center;
+}
+
+#voltar-de-operacao{
+    padding: 1rem;
+    color: var(--branco);
+    background: var(--vermelho);
+    border: solid var(--borda);
+    border-radius: 20px;
+    font-size: 1.5rem;
+    align-self: flex-start;
+}
+
+.pedido-dia{
+    padding: 2rem 0.5rem 0.5rem;
+    border: solid gray;
+    border-radius: 10px;
+    background: var(--fundo);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+#numero-do-pedido{
+    padding: 1rem 2rem;
+    background: var(--texto);
+    color: var(--branco);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    margin-right: 01rem;
+    align-self: start;
+}
+
+
+#status-do-pedido{
+    align-self: flex-end;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    padding: 1rem;
+    background-color: var(--texto);
+    color: var(--branco);
+}
+
+#horario-do-pedido{
+    background: var(--texto);
+    color: var(--branco);
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+
+/* style pedidos novos */
+.butão-chamarconteiner{
+    font-size: 1.2rem;
+    background: var(--borda);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+/* CONTEINER DESCRICAO PEDIDO ADMIN */
+.conteiner-descricãoPEdidoADMIN{
+    width: 30rem;
+    background: white;
+    padding: 1rem;
+}
+
+.cabecalho-descricao{
+    border-radius: 20px;
+    background: var(--borda);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#cancelar-pedido{
+    border-radius: 20px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background: var(--vermelho);
+    color: var(--branco);
+    border: none;
+}
+
+.cabecalho-descricao p{
+    padding: 1rem 2rem;
+    background: var(--texto);
+    color: var(--branco);
+    font-size: 1.5rem;
+    border-radius: 20px;
+}
+
+.div-descricaoADmin{
+    display: flex;
+    border: solid var(--bordas);
+    border-radius: 20px;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--borda);
+}
+
+.div-descricaoADmin img{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.div-descricaoADmin h4{
+    padding: 1rem 2rem;
+    background: var(--texto);
+    color: var(--branco);
+    font-size: 1.5rem;
+    border-radius: 20px;
+}
+
+.div-descricaoADmin h3{
+    font-size: 1.5rem;
+}
+
+.pagamentoDEscricaoADmin{
+    border-radius: 20px;
+    padding: 1rem;
+    background: var(--borda);
+}
+
+#totalPEDIDoDEscricao{
+    font-size: 1.5rem;
+
+}
+
+#formadepagamento{
+    font-size: 1.4rem;
+}
+
+#voltarDEscricaoADmin{
+    padding: 0.5rem 1.5rem;
+    background: var(--texto);
+    color: var(--branco);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
 }

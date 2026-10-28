@@ -826,11 +826,11 @@ async function enviarMEnsagem(mensagem){
     catch(erro){
         console.log("erro de conexão:",erro)
     }
-    
     const itens = carrinho.map(produto => ({
         nome_produto: produto.nome,
-        quantidade: Number(produto.quantidade), 
+        quantidade: Number(produto.quantidade),
         pedido_id: pedidoId,
+        img_produto: produto.img
     }))
     
     await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos`,{
