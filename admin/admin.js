@@ -423,9 +423,9 @@ async function visaogeral(DiaSelecionado = new Date()){
         }
         
         pedidos = await resposta.json()
-        const pedidos_concluidos = pedidos.filter(pedido=>{
-            pedido.status === "cluncluido"
-        })
+        const pedidos_concluidos = pedidos.filter(pedido=>
+            pedido.status === "concluido"
+        )
         pedidos_concluidos.forEach(pedido =>{
             const dataPEDido = new Date(pedido.dia_do_pedido)
             if(mesmoDia(dataPEDido,DiaSelecionado)){
@@ -548,7 +548,8 @@ async function mostrarMaisVendidos(DiaSelecionado = new Date()){
         
         const hoje = new Date();
         const pedidosHoje = pedidos.filter(pedido =>
-            mesmoDia(new Date(pedido.dia_do_pedido),DiaSelecionado)
+            mesmoDia(new Date(pedido.dia_do_pedido),DiaSelecionado) && 
+            pedido.status === "concluido"
         )
         
         const idsPedidosHoje = pedidosHoje.map(pedido => pedido.id_pedido);
@@ -615,8 +616,9 @@ async function mostrarMaisVendidos(DiaSelecionado = new Date()){
     }
     
 }
-
-// codigo operação
+// =================
+// CODIDO OPERACAO
+// =================
 
 const pedidos_novos = document.querySelector(".pedidos-novos")
 const pedidosEmpreparo = document.querySelector(".pedidos-em-preparo")
@@ -634,6 +636,9 @@ const butaoconcluido = document.querySelector(".conluido")
 const butaosaiuPAraentrega = document.querySelector(".pedidosPARAentrega")
 const buttaoPREPARAndo = document.querySelector(".pedidosEmpreparo")
 const pedidosNOVOs = document.querySelector(".pedidosNOVOs")
+
+const butaoCancelado = document.querySelector(".cancelado")
+const conteudoCancelado = document.querySelector(".pedidos-cancelado")
 
 const pronto = document.querySelector(".pronto")
 const conteudoPRonto = document.querySelector(".pedidos-prontos")
@@ -672,7 +677,7 @@ async function conteinerOPERAcaO(){
         const pedidosHOJE = pedidos_do_dia.filter(pedido=>
             new Date(pedido.dia_do_pedido).getDate() === hoje.getDate()
         )
-        
+        console.log(pedidosHOJE)
         pedidosHOJE.forEach(pedido=>{
             const divPEdiDO = document.createElement("div")
             const spanNUMEROdoPEdido = document.createElement("span")
@@ -701,20 +706,26 @@ async function conteinerOPERAcaO(){
             buttonStatus.textContent = pedido.status.toUpperCase()
 
             divPEdiDO.append(spanNUMEROdoPEdido,pHORArio,buttonStatus)
-            if(pedido.status.toUpperCase() === "preparando".toUpperCase()){
+            if(pedido.status === "preparando"){
                 buttonStatus.style.color = "white"
                 buttonStatus.style. background = "orangered"
                 pedidosEmpreparo.appendChild(divPEdiDO)
-            }else if(pedido.status.toUpperCase() === "para entrega".toUpperCase()){
+            }else if(pedido.status === "para entrega"){
                 buttonStatus.style.color = "white"
                 buttonStatus.style.background = "blue"
                 pedidoSaiuparaentrega.appendChild(divPEdiDO)
-            }else if(pedido.status.toUpperCase() === "aguardando".toUpperCase()){
+            }else if(pedido.status === "aguardando"){
+                console.log("aqui")
+                buttonStatus.style.color = "white"
+                buttonStatus.style.backgroundColor = "#f0a500"
                 pedidos_novos.appendChild(divPEdiDO)
-            }else if(pedido.status.toUpperCase() === "pronto".toUpperCase()){
+            }else if(pedido.status === "pronto"){
                 buttonStatus.style.color = "white"
                 buttonStatus.style.background = "green"
                 conteudoPRonto.appendChild(divPEdiDO)
+            }else if(pedido.status === "cancelado"){
+                buttonStatus.style.background = "red"
+                conteudoCancelado.appendChild(divPEdiDO)
             }else{
                 buttonStatus.style.color = "white"
                 buttonStatus.style.background = "green"
@@ -730,12 +741,14 @@ async function conteinerOPERAcaO(){
     // O children é a lista de elementos filhos do container 
     // (só os que estão diretamente dentro dele), e o .length conta quantos são.
     atualizarConteiner(pedidos_novos,pedidosNOVOs)
+    atualizarConteiner(conteudoCancelado,butaoCancelado)
     atualizarConteiner(conteudoPRonto,pronto)
     atualizarConteiner(pedidosCOnluidos,butaoconcluido)
     atualizarConteiner(pedidoSaiuparaentrega,butaosaiuPAraentrega)
     atualizarConteiner(pedidosEmpreparo,buttaoPREPARAndo)
 
 }
+
 // o que esta a esquerda é o valor atual,se esse valor for vedadeiro,
 // o px valor da lista é o que esta a direita
 const proximoStatus = {
@@ -810,11 +823,16 @@ const numPEdido = document.getElementById("numero-pedido")
 const totalPEdidoDEscricao = document.getElementById("totalPEDIDoDEscricao")
 const pagamentoDescricaoADmin = document.getElementById("formadepagamento")
 const voltarDescricaoADmin = document.getElementById("voltarDEscricaoADmin")
-voltarDescricaoADmin.addEventListener("click",()=>{ 
-    conteudo_descricaoADmin.innerHTML = "";
-    mostrar('operacao')})
+const cancelarPedido = document.getElementById("cancelar-pedido")
+
+cancelarPedido.addEventListener("click",cancelarPEdido)
+voltarDescricaoADmin.addEventListener("click",()=>{conteudo_descricaoADmin.innerHTML = ""; mostrar('operacao')})
+
+
+let pedido_clicado = null
 
 async function mostrarDEscricaoDopedido(pedido){
+    pedido_clicado = pedido.id_pedido
     numPEdido.textContent = `pedido: #0${pedido.id_pedido}`
     totalPEdidoDEscricao.textContent = `total: R$ ${pedido.total},00`
     pagamentoDescricaoADmin.textContent = `Forma de pagamento: ${pedido.form_pagamento}`     
@@ -869,5 +887,211 @@ async function mostrarDEscricaoDopedido(pedido){
 }
 
 async function cancelarPEdido(){
+    try{
+        const resposta = await fetch(
+            `https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos?id_pedido=eq.${pedido_clicado}`,
+            {
+                method:"PATCH",
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=representation"
+                },
 
+                body:JSON.stringify({status: "cancelado"})
+            }
+        )
+        const resultado = await resposta.json()
+
+        if (!resposta.ok) {
+            console.log("Erro do Supabase:", resultado)
+            alert("Erro ao atualizar o pedido!")
+            return
+        }
+        
+    }catch(erro) {
+            alert("erro de conexão")
+            console.log("Erro de conexão:", erro)
+            return
+    }
+    
+    conteinerOPERAcaO();
 }
+
+// ===========================
+// CONTEINER PEDIDOS HISTORICO
+// ===========================
+
+const chamarHistorico = document.getElementById("ChamarPEDIDOS")
+chamarHistorico.addEventListener("click",carregarHistorico)
+const voltarHistorico = document.getElementById("voltarPEdidos")
+voltarHistorico.addEventListener("click",()=>{mostrar('area-admin')})
+
+let todosPedidos = [];      // todos os pedidos que vieram do banco
+let filtroAtual = 'todos';  // qual botão de filtro está ativo
+let textoBusca = '';        // o que foi digitado na busca
+
+async function carregarHistorico(){
+    mostrar('historico')
+    const resposta = await fetch(
+        `https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos?select=*&order=dia_do_pedido.desc`,
+        { 
+        headers: {
+                apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+        } }
+    );
+    const dados = await resposta.json();
+
+    if (!resposta.ok || !Array.isArray(dados)) {
+        console.log('erro ao buscar pedidos:', dados);
+        return;
+    }
+
+    todosPedidos = dados;
+    desenharHistorico();
+}
+
+// ====== FUNÇÕES PEQUENAS DE AJUDA ======
+function formatarDinheiro(valor){
+    return 'R$ ' + Number(valor).toFixed(2).replace('.', ',');// 19.9 vira "R$ 19,90"
+}
+
+function numeroDoPedido(pedido) {
+    return String(pedido.id_pedido).padStart(3, '0');// 72 vira "0072"
+}
+
+function formatarDataHora(data){
+    const dia = data.toLocaleDateString('pt-BR',{day: 'numeric', month: 'long'});
+    const hora = data.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    return `${dia} - ${hora}`;// "23 de outubro - 22:47"
+}
+
+// usa a sua função mesmoDia
+function nomeDoDia(data){
+    const hoje = new Date();
+    const ontem = new Date();
+    ontem.setDate(ontem.getDate() - 1);
+
+    if (mesmoDia(data, hoje)) return 'Hoje';
+    if (mesmoDia(data, ontem)) return 'Ontem';
+    return data.toLocaleDateString('pt-BR');
+}
+
+// texto e cor de cada status
+function infoDoStatus(status){
+    if (status === 'concluido') return { texto: 'Concluído', classe: 'hist-concluido' };
+    if (status === 'cancelado') return { texto: 'Cancelado', classe: 'hist-cancelado' };
+    return { texto: 'Em aberto', classe: 'hist-aberto' };
+}
+
+// ====== DESENHA A TELA ======
+function desenharHistorico() {
+    const lista = document.getElementById('hist-lista');
+    lista.innerHTML = '';   // limpa o que tinha antes
+
+  // 1. aplica o filtro do botão e a busca
+    const filtrados = todosPedidos.filter(pedido => {
+        const status = pedido.status;
+        if (filtroAtual === 'concluido' && status !== 'concluido') return false;
+        if (filtroAtual === 'cancelado' && status !== 'cancelado') return false;
+        if (filtroAtual === 'aberto' && (status === 'concluido' || status === 'cancelado')) return false;
+        if (textoBusca && !numeroDoPedido(pedido).includes(textoBusca)) return false;
+        return true;
+    });
+    
+    if (filtrados.length === 0) {
+        lista.textContent = 'Nenhum pedido encontrado';
+        return;
+    }
+
+    // 2. separa os pedidos em grupos, um para cada dia
+    const grupos = [];
+    filtrados.forEach(pedido => {
+        const nome = nomeDoDia(new Date(pedido.dia_do_pedido));
+        let grupo = grupos.find(g => g.nome === nome);
+
+        if (!grupo) {
+        grupo = { nome: nome, pedidos: [] };
+        grupos.push(grupo);
+        }
+        grupo.pedidos.push(pedido);
+    });
+
+    // 3. cria o HTML de cada grupo
+    grupos.forEach(grupo => {
+        let somaConcluidos = 0;
+        grupo.pedidos.forEach(pedido => {
+            if (pedido.status === 'concluido') somaConcluidos += pedido.total;
+        });
+
+        const bloco = document.createElement('div');
+        bloco.className = 'hist-grupo';
+
+        const topo = document.createElement('div');
+        topo.className = 'hist-grupo-topo';
+        const titulo = document.createElement('strong');
+        titulo.textContent = grupo.nome;
+        const resumo = document.createElement('span');
+        resumo.textContent = `${grupo.pedidos.length} pedidos • ${formatarDinheiro(somaConcluidos)}`;
+        topo.appendChild(titulo);
+        topo.appendChild(resumo);
+
+        const caixa = document.createElement('div');
+        caixa.className = 'hist-caixa';
+
+        grupo.pedidos.forEach(pedido => {
+            const status = infoDoStatus(pedido.status);
+            const data = new Date(pedido.dia_do_pedido);
+
+            const linha = document.createElement('div');
+            linha.className = 'hist-linha';
+
+            const esquerda = document.createElement('div');
+            esquerda.className = 'hist-esquerda';
+            const numero = document.createElement('strong');
+            numero.textContent = numeroDoPedido(pedido);
+            const detalhe = document.createElement('p');
+            detalhe.textContent = `${formatarDataHora(data)} · ${pedido.form_pagamento}`;
+            esquerda.appendChild(numero);
+            esquerda.appendChild(detalhe);
+
+            const direita = document.createElement('div');
+            direita.className = 'hist-direita';
+            const valor = document.createElement('strong');
+            valor.textContent = formatarDinheiro(pedido.total);
+            const selo = document.createElement('span');
+            selo.className = `hist-selo ${status.classe}`;
+            selo.textContent = status.texto;
+            direita.appendChild(valor);
+            direita.appendChild(document.createElement('br'));
+            direita.appendChild(selo);
+
+            linha.appendChild(esquerda);
+            linha.appendChild(direita);
+            caixa.appendChild(linha);
+    });
+
+    bloco.appendChild(topo);
+    bloco.appendChild(caixa);
+    lista.appendChild(bloco);
+    });
+}
+
+// ====== CLIQUES ======
+document.querySelectorAll('.hist-chip').forEach(botao => {
+    botao.addEventListener('click', () => {
+    filtroAtual = botao.dataset.filtro;   // pega o valor do data-filtro do HTML
+
+    document.querySelectorAll('.hist-chip').forEach(button => button.classList.remove('ativo'));
+    botao.classList.add('ativo');
+
+    desenharHistorico();
+    });
+});
+
+document.getElementById('hist-busca-input').addEventListener('input', (evento) => {
+    textoBusca = evento.target.value.trim();
+    desenharHistorico();
+});

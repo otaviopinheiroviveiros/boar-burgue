@@ -847,3 +847,141 @@ p{
     border-radius: 20px;
     margin-bottom: 1rem;
 }
+
+.mais-vendidosH2{
+    margin-left: 1rem;
+    font-size: 1.7rem;
+    padding: 1rem;
+}
+/* conteiner pedidos */
+.hist {
+    width: 100%;
+    max-width: 30rem;
+    padding: 16px; 
+    font-family: sans-serif; 
+    background: var(--branco); 
+    margin-top: 1rem; 
+    border-radius: 10px;
+}
+
+.hist-topo { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.voltarpedido{ 
+    border: 1px solid #ddd; 
+    color: var(--branco);
+    background: var(--vermelho);
+    border-radius: 20px;
+    padding: 1rem;
+    font-size: 1.5rem; 
+}
+
+.hist-topo h2{
+    font-size: 2rem;
+}
+
+.hist-busca { 
+    width: 100%; 
+    box-sizing: border-box; 
+    margin: 16px 0; 
+    padding: 14px;
+    font-size: 1.2rem;
+    border: 1px solid #ddd; 
+    border-radius: 14px; 
+}
+
+/* os botões de filtro (Todos, Em aberto...) */
+.hist-filtros{ 
+    display: flex; 
+    gap: 8px; 
+    overflow-x: auto; 
+    margin-bottom: 16px; 
+}
+
+.hist-chip { 
+    border: 1px solid #ddd; 
+    background: white; 
+    border-radius: 20px; 
+    padding: 10px 18px; 
+    white-space: nowrap;
+}
+
+.hist-chip.ativo { 
+    background: #1a1a1a; 
+    color: white; 
+}
+
+/* o bloco cinza de cada dia */
+.hist-grupo { 
+    background: #f4f4f4; 
+    border-radius: 20px; 
+    padding: 14px; 
+    margin-bottom: 16px; 
+}
+
+.hist-grupo-topo { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 6px 6px 12px; 
+}
+
+/* a caixa branca com a lista de pedidos */
+.hist-caixa { 
+    background: white; 
+    border-radius: 16px; 
+    padding: 0 14px; 
+}
+.hist-linha { 
+    display: flex; 
+    align-items: center; 
+    padding: 16px 0; 
+    border-bottom: 1px solid #eee; 
+}
+
+.hist-linha:last-child { 
+    border-bottom: none; 
+}
+
+.hist-esquerda { 
+    flex: 1; 
+}
+
+.hist-esquerda p { 
+    margin: 4px 0 0; 
+    color: #777; 
+    font-size: 0.9rem; }
+
+.hist-direita { 
+    text-align: right; 
+}
+
+.hist-seta { 
+    margin-left: 12px; 
+    color: #999; 
+    font-size: 1.4rem; 
+}
+
+/* o selo colorido do status */
+.hist-selo { 
+    display: inline-block; 
+    margin-top: 6px; 
+    padding: 4px 10px; 
+    border-radius: 20px; 
+    color: white; 
+    font-size: 0.85rem; 
+}
+
+.hist-concluido { 
+    background: #1fa05a; 
+}
+
+.hist-cancelado { 
+    background: #d93025; 
+}
+
+.hist-aberto { 
+    background: #f0a500; 
+}

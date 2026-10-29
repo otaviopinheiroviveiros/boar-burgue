@@ -207,6 +207,7 @@
         </div>
 
         <div class="produtos-mais-vendidos">
+            <h2 class="mais-vendidosH2">Produtos Mais vendidos do dia.</h2>
         </div>
         
     
@@ -246,6 +247,11 @@
             <button class="butão-chamarconteiner" data-conteiner="pedido-conluido">concluido</button>
             <div class="pedidos-conluidos" id="pedido-conluido" data-pedidos="conteiner-pedido"></div>
         </div>
+        
+        <div class="cancelado">
+            <button class="butão-chamarconteiner" data-conteiner="pedido-cancelado">cancelado</button>
+            <div class="pedidos-cancelado" id="pedido-cancelado" data-pedidos="conteiner-pedido"></div>
+        </div>
 
     </section>
     <!-- CONTEINER EDSCRICAO DO PEDIDO ADMIN -->
@@ -262,7 +268,28 @@
             <p><span id="formadepagamento"></span></p>
         </div>
     </section>
-    <script src="admin.js"></script>
+
+    <!-- CONTEINER PEDIDOS  -->
+    <section id="historico" class="hist escondido">
+        <div class="hist-topo">
+            <h2>Pedidos</h2>
+            <button class="voltarpedido" id="voltarPEdidos">voltar</button>
+        </div>
+
+        <input id="hist-busca-input" class="hist-busca" type="text" placeholder="Digite o número do pedido">
+
+        <div class="hist-filtros">
+            <button class="hist-chip ativo" data-filtro="todos">Todos</button>
+            <button class="hist-chip" data-filtro="aberto">Em aberto</button>
+            <button class="hist-chip" data-filtro="concluido">Concluídos</button>
+            <button class="hist-chip" data-filtro="cancelado">Cancelados</button>
+        </div>
+
+        <!-- o JavaScript cria os grupos de dias aqui dentro -->
+        <div id="hist-lista"></div>
+    </section>
+
+<script src="admin.js"></script>
 </body>
 </html>
 

@@ -809,7 +809,7 @@ async function enviarMEnsagem(mensagem){
                     'Prefer':'return=representation'
                     },
             body: JSON.stringify({
-                status: "agurdando",
+                status: "aguardando",
                 origem: "whatsApp",
                 form_pagamento: `${selecionado_pagamento.value.toUpperCase()}`,
                 total: `${totalpedido}`
