@@ -28,21 +28,13 @@ const conteinercadastrarPEDido  = document.querySelector(".cadastrar-pedido")
 const canCelarcadastro = document.getElementById("cancelarCAdastro")
 canCelarcadastro.addEventListener("click",limparPEdido)
 
-function cabecalhosAdmin(){
-    return {
-        'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-        'Authorization': `Bearer ${localStorage.getItem('tokenAdmin')}`,
-        'Content-Type': 'application/json'
-    };
-}
-
 async function verificar(event){
   // impede o formulário de recarregar a página
     event.preventDefault();
 
     const resposta = await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/auth/v1/token?grant_type=password`, {
         method: 'POST',
-        headers: cabecalhosAdmin(),
+        headers: { 'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe", 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: usuario.value, password: senha.value })
     });
 
@@ -66,7 +58,10 @@ async function verificarAcesso() {
     if (!token) return;
 
     const resposta = await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co//auth/v1/user`, {
-        headers: cabecalhosAdmin()
+        headers: {
+        'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+        'Authorization': `Bearer ${token}`
+        }
     });
 
     if (resposta.ok) {
@@ -85,7 +80,7 @@ async function renovarCracha() {
 
     const resposta = await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co//auth/v1/token?grant_type=refresh_token`, {
         method: 'POST',
-        headers: cabecalhosAdmin(),
+        headers: { 'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe", 'Content-Type': 'application/json' },
         body: JSON.stringify({refresh_token: reserva})
     });
 
@@ -115,7 +110,10 @@ async function cadastrarpedido(){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/produtos",
             {
-            headers: cabecalhosAdmin()
+            headers: {
+                apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
             )
 
@@ -323,10 +321,10 @@ async function finalizarCAdastroPEDIDO(){
             const resposta = await fetch("https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos",{
                 method: 'POST',
                 headers: {
-                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-                    Authorization: `Bearer ${localStorage.getItem('tokenAdmin')}`,
-                    "Content-Type": "application/json",
-                    "Prefer": "return=representation"
+                    'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    'Content-Type': 'Application/json',
+                    'Prefer':'return=representation'
                 },
                 body: JSON.stringify({
                     status: "aguardando",
@@ -477,7 +475,10 @@ async function visaogeral(DiaSelecionado = new Date()){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos",
             {
-                headers: cabecalhosAdmin()
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
         )
 
@@ -596,7 +597,10 @@ async function mostrarMaisVendidos(DiaSelecionado = new Date()){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos",
             {
-                headers: cabecalhosAdmin()
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
         )
         
@@ -721,7 +725,10 @@ async function conteinerOPERAcaO(){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos",
             {
-                headers: cabecalhosAdmin()
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
         )
 
@@ -736,6 +743,7 @@ async function conteinerOPERAcaO(){
         const pedidosHOJE = pedidos_do_dia.filter(pedido=>
             new Date(pedido.dia_do_pedido).getDate() === hoje.getDate()
         )
+        console.log(pedidosHOJE)
         pedidosHOJE.forEach(pedido=>{
             const divPEdiDO = document.createElement("div")
             const spanNUMEROdoPEdido = document.createElement("span")
@@ -773,6 +781,7 @@ async function conteinerOPERAcaO(){
                 buttonStatus.style.background = "blue"
                 pedidoSaiuparaentrega.appendChild(divPEdiDO)
             }else if(pedido.status === "aguardando"){
+                console.log("aqui")
                 buttonStatus.style.color = "white"
                 buttonStatus.style.backgroundColor = "#f0a500"
                 pedidos_novos.appendChild(divPEdiDO)
@@ -843,7 +852,7 @@ async function alterarStatusdoPEDido(pedido){
                 method:"PATCH",
                 headers: {
                     apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-                    Authorization: `Bearer ${localStorage.getItem('tokenAdmin')}`,
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     "Content-Type": "application/json",
                     "Prefer": "return=representation"
                 },
@@ -899,7 +908,10 @@ async function mostrarDEscricaoDopedido(pedido){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos",
             {
-                headers: cabecalhosAdmin()
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
         )
 
@@ -948,7 +960,7 @@ async function cancelarPEdido(){
                 method:"PATCH",
                 headers: {
                     apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-                    Authorization: `Bearer ${localStorage.getItem('tokenAdmin')}`,
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     "Content-Type": "application/json",
                     "Prefer": "return=representation"
                 },
@@ -991,8 +1003,10 @@ async function carregarHistorico(){
     const resposta = await fetch(
         `https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos?select=*&order=dia_do_pedido.desc`,
         { 
-        headers: cabecalhosAdmin()
-        }
+        headers: {
+                apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+        } }
     );
     const dados = await resposta.json();
 
@@ -1174,7 +1188,10 @@ async function Cardapio(){
         const resposta = await fetch(
             "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/produtos",
             {
-            headers: cabecalhosAdmin()
+            headers: {
+                apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
             }
             )
 
@@ -1267,7 +1284,7 @@ async function atualizarDIsponibilidadedoPEdido(id,disponivel){
                 method:"PATCH",
                 headers: {
                     apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-                    Authorization: `Bearer ${localStorage.getItem('tokenAdmin')}`,
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     "Content-Type": "application/json",
                     "Prefer": "return=representation"
                 },
@@ -1309,7 +1326,7 @@ async function editarPRoduto(){
                 method:"PATCH",
                 headers: {
                     apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-                    Authorization: `Bearer ${localStorage.getItem('tokenAdmin')}`,
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     "Content-Type": "application/json",
                     "Prefer": "return=representation"
                 },
