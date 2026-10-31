@@ -17,8 +17,11 @@ voltarCADAStrarpp.addEventListener("click",()=>{
     mostrar('area-admin')
 })
 
+let contadorEVITARprodutoREpitido = null
 const finalizarCAdastro = document.getElementById("finalizar-cadastro")
-finalizarCAdastro.addEventListener("click",finalizarCAdastroPEDIDO)
+finalizarCAdastro.addEventListener("click",()=>{
+    contadorEVITARprodutoREpitido++
+    finalizarCAdastroPEDIDO()})
 const voltarmostarcadastro = document.getElementById("voltarmostarcadastro")
 voltarmostarcadastro.addEventListener("click",limparPEdido)
 const conteinercadastrarPEDido  = document.querySelector(".cadastrar-pedido")
@@ -246,65 +249,71 @@ function mostraprodutoscadastrado(){
 }
 
 async function finalizarCAdastroPEDIDO(){
-    if(inputFORMAdepagamento.value === ""){
-        alert("digite a forma de pagamento")
+    if(contadorEVITARprodutoREpitido > 1){
+        alert("pode não mano")
         return
-    }
-    
-    let pedidoId = null
-    
-    try{
-        const resposta = await fetch("https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos",{
-            method: 'POST',
-            headers: {
+    }else{
+        if(inputFORMAdepagamento.value === ""){
+            contadorEVITARprodutoREpitido = null
+            alert("digite a forma de pagamento")
+            return
+        }
+        
+        let pedidoId = null
+        
+        try{
+            const resposta = await fetch("https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/pedidos",{
+                method: 'POST',
+                headers: {
                     'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
                     'Content-Type': 'Application/json',
                     'Prefer':'return=representation'
-                    },
-            body: JSON.stringify({
-                status: "aguardando",
-                origem: "CASA",
-                form_pagamento: `${inputFORMAdepagamento.value.toUpperCase()}`,
-                total: `${total}`
+                },
+                body: JSON.stringify({
+                    status: "aguardando",
+                    origem: "CASA",
+                    form_pagamento: `${inputFORMAdepagamento.value.toUpperCase()}`,
+                    total: `${total}`
+                })
             })
-        })
-        
-        if(!resposta.ok){
-            console.log("erro html:",resposta.status)
-            alert("erro no html!")
+            
+            if(!resposta.ok){
+                console.log("erro html:",resposta.status)
+                alert("erro no html!")
+                return
+            }
+            
+            const dados = await resposta.json()
+            pedidoId = dados[0].id_pedido
+        }
+        catch(erro){
+            console.log("erro de conexão:",erro)
+            alert("coneção estavel!")
             return
         }
         
-        const dados = await resposta.json()
-        pedidoId = dados[0].id_pedido
-    }
-    catch(erro){
-        console.log("erro de conexão:",erro)
-        alert("coneção estavel!")
-        return
-    }
-    
-    const itens = cadastrarPedido.map(produto => ({
-        nome_produto: produto.nome,
-        quantidade: Number(produto.quantidade), 
-        pedido_id: pedidoId,
-        img_produto: produto.img
-    }))
-    
-    await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos`,{
-        method: 'POST',
-        headers:{
-            'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-            'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
-            'Content-Type': 'Application/json',
-        },
+        const itens = cadastrarPedido.map(produto => ({
+            nome_produto: produto.nome,
+            quantidade: Number(produto.quantidade), 
+            pedido_id: pedidoId,
+            img_produto: produto.img
+        }))
         
-        body:JSON.stringify(itens)
+        await fetch(`https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/itens_pedidos`,{
+            method: 'POST',
+            headers:{
+                'apikey': "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                'Authorization': "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                'Content-Type': 'Application/json',
+            },
+            
+            body:JSON.stringify(itens)
+            
+        })
+        mostrarTELAdeconcluido()
+    }
     
-    })
-    
-    mostrarTELAdeconcluido()
 }
 
 function mostrarTELAdeconcluido(){
@@ -325,6 +334,7 @@ function mostrarTELAdeconcluido(){
         divpai.style.display = "none"
         mostrar('area-admin')
         divpai.remove()
+        contadorEVITARprodutoREpitido = null
     },2000)
     limparPEdido()
 }
@@ -946,6 +956,7 @@ async function carregarHistorico(){
 
     if (!resposta.ok || !Array.isArray(dados)) {
         console.log('erro ao buscar pedidos:', dados);
+        alert('erro ao buscar pedidos:');
         return;
     }
 
@@ -1095,3 +1106,231 @@ document.getElementById('hist-busca-input').addEventListener('input', (evento) =
     textoBusca = evento.target.value.trim();
     desenharHistorico();
 });
+
+// ====================
+//  ATUALIZAR CARDAPIO
+// ====================
+
+const ChamarCardapio = document.getElementById("chamarCARDaPIo")
+ChamarCardapio.addEventListener("click",Cardapio)
+const voltarCardapio = document.getElementById("voltar-CArdapio")
+voltarCardapio.addEventListener("click",()=>{mostrar('area-admin')})
+const conteinerPRodutos = document.getElementById("produtos")
+const inputBuscar = document.getElementById("buscarproduto")
+
+let Produtos = null
+
+inputBuscar.addEventListener("input",()=>{
+    const texto = inputBuscar.value.toLowerCase();
+    const produtosFiltrados = Produtos.filter(produto=>produto.nome.toLowerCase().includes(texto));
+    desenharCArdapio(produtosFiltrados)
+})
+
+async function Cardapio(){
+    mostrar('cardapio')
+    try{
+        const resposta = await fetch(
+            "https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/produtos",
+            {
+            headers: {
+                apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe"
+                }
+            }
+            )
+
+            if(!resposta.ok){
+                console.log("erro html:",resposta.status)
+                alert("erro no codigo")
+                return
+            }
+            
+            Produtos = await resposta.json()
+    }
+    catch(erro){
+            alert("conexão estável!")
+            console.log("erro de conexão:",erro)
+            return
+    }
+    
+    desenharCArdapio(Produtos)
+}
+let PrecoNovo = null
+let nomePROduto = null
+let descricaoPRODUTO = null
+let idEDITAR = null
+
+function desenharCArdapio(Produtos){
+    conteinerPRodutos.innerHTML = "";
+    Produtos.forEach(produto=>{
+        const div = document.createElement("div")
+        div.className = "divPRodutos"
+        const img = document.createElement("img")
+        const h4nome = document.createElement("h4")
+        const pdescricao = document.createElement("p")
+        const butaoDisponivel = document.createElement("button")
+        const butaoEditar = document.createElement("button")
+        butaoEditar.id = "editarPRoduto"
+        butaoEditar.style.alignSelf = "flex-end"
+        butaoEditar.addEventListener("click",()=>{
+            idEDITAR = produto.id
+            nomePROduto = produto.nome
+            descricaoPRODUTO = produto.descricao
+            PrecoNovo = produto.preco
+            rederizarEditarProduto()
+        })
+        butaoEditar.textContent = "Editar"
+        const spanPreco = document.createElement("span")
+
+        img.className = "imgPROdutoadmin"
+        img.src = produto.img_url
+        if(produto.disponivel === true){
+            butaoDisponivel.textContent = "disponivel"
+            butaoDisponivel.style.color = "white"
+            butaoDisponivel.style.background = "green"
+            butaoDisponivel.style.borderColor = "white"
+        }else{
+            butaoDisponivel.textContent = "indisponivel"
+            butaoDisponivel.style.color = "white"
+            butaoDisponivel.style.background = "red"
+            butaoDisponivel.style.borderColor = "white"
+        }
+        butaoDisponivel.style.alignSelf =  "flex-end"
+        butaoDisponivel.addEventListener("click",(event)=>{
+            event.stopPropagation();
+            const id = produto.id;
+            const disponivel = produto.disponivel;
+            atualizarDIsponibilidadedoPEdido(id,disponivel);
+        })
+        butaoDisponivel.id = "butaodisponivel"
+        h4nome.textContent = produto.nome
+        pdescricao.textContent = produto.descricao
+        spanPreco.textContent = `R$ ${produto.preco},00`
+
+        div.append(butaoEditar,img,h4nome,pdescricao,spanPreco,butaoDisponivel)
+        conteinerPRodutos.appendChild(div)
+
+    })
+}
+
+async function atualizarDIsponibilidadedoPEdido(id,disponivel){
+    let disponibilidade = null
+    if(disponivel === true){
+        disponibilidade = false
+    }else{
+        disponibilidade = true
+    }
+    
+    try{
+        const resposta = await fetch(
+            `https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/produtos?id=eq.${id}`,
+            {   
+                method:"PATCH",
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=representation"
+                },
+                body:JSON.stringify({disponivel:disponibilidade})
+            }
+        )
+        const resultado = await resposta.json()
+
+        if (!resposta.ok) {
+            console.log("Erro do Supabase:", resultado)
+            alert("Erro ao atualizar o pedido!")
+            return
+        }
+        
+    }catch(erro) {
+            alert("erro de conexão")
+            console.log("Erro de conexão:", erro)
+            return
+    }
+    
+Cardapio();
+
+}
+
+let arrayELmentosEdicao = []
+
+async function editarPRoduto(){
+    const itens = arrayELmentosEdicao.map(produto => ({
+        nome: produto.nome,
+        descricao:produto.descricao,
+        preco:produto.preco
+        // img_url: produto.img || '', // esse parte esta comentada porque não sei se vou aderir a ideia de fazer a atualização de novoas imagens
+    }))
+    
+    try{
+        const resposta = await fetch(
+            `https://fapfntdcpumrrvxjyudt.supabase.co/rest/v1/produtos?id=eq.${idEDITAR}`,
+            {   
+                method:"PATCH",
+                headers: {
+                    apikey: "sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    Authorization: "Bearer sb_publishable_tg3HC7_Nu3Rgb7zlPua4FQ_zhoV3VXe",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=representation"
+                },
+                body:JSON.stringify(itens)
+            }
+        )
+        const resultado = await resposta.json()
+
+        if (!resposta.ok) {
+            console.log("Erro do Supabase:", resultado)
+            alert("Erro ao atualizar o pedido!")
+            return
+        }
+        
+    }catch(erro) {
+            alert("erro de conexão")
+            console.log("Erro de conexão:", erro)
+            return
+    }
+    
+    mostrar('area-admin')
+}
+
+const butaoEnviar = document.getElementById("enviar-alteraçõesProduto")
+butaoEnviar.addEventListener("click",pegarELEMENtosEDICAO)
+const cancelarEdicao = document.getElementById("cancelarEdição-produto")
+cancelarEdicao.addEventListener("click",cancelaredicao)
+
+function cancelaredicao(){
+    mostrar('area-admin')
+    let nomeNovo = document.getElementById("nomeNovo")
+    let descricaoNova = document.getElementById("descricaoNova")
+    let precoNOVo = document.getElementById("precoNovo")
+    
+    nomeNovo.value = ""
+    descricaoNova.value = ""
+    precoNOVo.value = ""
+    arrayELmentosEdicao = []
+}
+
+function pegarELEMENtosEDICAO(){
+    const nomeNovo = document.getElementById("nomeNovo").value
+    const descricaoNova = document.getElementById("descricaoNova").value
+    const precoNOVo = document.getElementById("precoNovo").value
+    // const imgNova = document.getElementById("imagem-produto")
+    // const aquivoimg = imgNova.files[0]
+
+    // arrayELmentosEdicao.push({nome:nomeNovo,descricao:descricaoNova,preco:precoNOVo,img:aquivoimg})
+    arrayELmentosEdicao.push({nome:nomeNovo,descricao:descricaoNova,preco:precoNOVo})
+    editarPRoduto()
+}
+
+function rederizarEditarProduto(){
+    mostrar('editar')
+    let nomeNovo = document.getElementById("nomeNovo")
+    let descricaoNova = document.getElementById("descricaoNova")
+    let precoNOVo = document.getElementById("precoNovo")
+
+    nomeNovo.value = nomePROduto
+    descricaoNova.value = descricaoPRODUTO
+    precoNOVo.value = PrecoNovo
+
+}

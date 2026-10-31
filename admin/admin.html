@@ -254,7 +254,7 @@
         </div>
 
     </section>
-    <!-- CONTEINER EDSCRICAO DO PEDIDO ADMIN -->
+    <!-- CONTEINER deSCRICAO DO PEDIDO ADMIN -->
     <section class="conteiner-descricãoPEdidoADMIN escondido" id="descricaoADmin">
         <button id="voltarDEscricaoADmin">voltar</button>
         <div class="cabecalho-descricao">
@@ -287,6 +287,39 @@
 
         <!-- o JavaScript cria os grupos de dias aqui dentro -->
         <div id="hist-lista"></div>
+    </section>
+
+    <!-- CONTEINER CARDAPIO -->
+    <section class="cardapio escondido" id="cardapio">
+        <div class="cabecalho-cardapio">
+            <h2>Cardápio</h2>
+            <button id="voltar-CArdapio">voltar</button>
+        </div>
+
+        <div class="buscarProduto">
+            <h2>Buscar Produto</h2>
+            <input type="text" id="buscarproduto" placeholder="Buscar Produto">
+        </div>
+        
+        
+        <div class="produtosCARDAPIO" id="produtos"></div>
+    
+    </section>
+
+    <!-- CONTEINER EDITAR PRODUTO -->
+    <section class="editar-pedido escondido" id="editar">
+        <h3>Editar Produto</h3>
+        <form action="" class="card-inputs">
+                <input type="text" placeholder="Novo nome do Produto" id="nomeNovo">
+                <input type="text" placeholder="Nova Descrição" id="descricaoNova">
+                <input type="number" placeholder="novo Preço" id="precoNovo">
+                <!-- <input type="file" id="imagem-produto" accept="image/*"> -->
+        </form>
+
+        <div class="butoesDEcisao">
+            <button id="enviar-alteraçõesProduto" style="background: green;color: var(--branco); border: none;">Salvar</button>
+            <button id="cancelarEdição-produto" style="background: var(--vermelho);color: var(--branco); border: none;">cancelar</button>
+        </div>
     </section>
 
 <script src="admin.js"></script>
