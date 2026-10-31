@@ -324,7 +324,7 @@ function mostrarTELAdeconcluido(){
     divpai.className = "divPAIpedidoConcLUIDo"
     const div = document.createElement("div")
     const img = document.createElement("img")
-    img.src = "../img/concluido.png"
+    img.src = "concluido.png"
     img.className = "imgconcluido"
     div.append(img)
     divpai.append(div)

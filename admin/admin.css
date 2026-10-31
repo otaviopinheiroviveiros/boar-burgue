@@ -212,6 +212,8 @@ body{
     align-items: center;
     flex-direction: column;
     border-radius:20px;
+    width: 100%;
+    max-width: 40rem;
 }
 
 .produtos{
@@ -487,8 +489,8 @@ body{
 .conteiner-visao-geral{
     background: lightgray;
     padding: 1rem;
-    width: 100vw;
-    max-width: 800px;
+    width: 100%;
+    max-width: 40rem;
     min-height: 80vh;
     margin: auto;
     margin-top: 2rem;
@@ -681,8 +683,8 @@ p{
 
 /* conteiner operação */
 .conteiner-operação{
-    width: 30rem;
-    max-width: 100%;
+    width: 100%;
+    max-width: 40rem;
     background: var(--branco);
     padding: 1rem;
     border-radius: 10px;
@@ -765,6 +767,8 @@ p{
     width: 30rem;
     background: white;
     padding: 1rem;
+    border-radius: 20px;
+    margin-top: 1rem;
 }
 
 .cabecalho-descricao{
