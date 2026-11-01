@@ -743,7 +743,6 @@ async function conteinerOPERAcaO(){
         const pedidosHOJE = pedidos_do_dia.filter(pedido=>
             new Date(pedido.dia_do_pedido).getDate() === hoje.getDate()
         )
-        console.log(pedidosHOJE)
         pedidosHOJE.forEach(pedido=>{
             const divPEdiDO = document.createElement("div")
             const spanNUMEROdoPEdido = document.createElement("span")
@@ -781,7 +780,6 @@ async function conteinerOPERAcaO(){
                 buttonStatus.style.background = "blue"
                 pedidoSaiuparaentrega.appendChild(divPEdiDO)
             }else if(pedido.status === "aguardando"){
-                console.log("aqui")
                 buttonStatus.style.color = "white"
                 buttonStatus.style.backgroundColor = "#f0a500"
                 pedidos_novos.appendChild(divPEdiDO)

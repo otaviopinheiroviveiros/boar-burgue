@@ -845,7 +845,7 @@ async function enviarMEnsagem(mensagem){
     
     })
 
-    const numero = '5598985170870'
+    const numero = '5598999999999'
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`
     window.open(url,'_blank')
     
